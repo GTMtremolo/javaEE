@@ -16,8 +16,24 @@
     <body>
         <%@include file="Header.jsp"%>
         <%--USER INFO--%>
-        <div class="alert alert-danger">
-            <strong>User information: N/A</strong>
+        <!--        <div class="alert alert-danger">
+                    <strong>User information: N/A</strong>
+                </div>-->
+        <div class="alert alert-info">         
+            <table class="table-responsive">
+                <tr>
+                    <td><strong>Username</strong></td>  
+                    <td><strong>:</strong> Wade Wilson</td> 
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>  
+                    <td><strong>:</strong> deadpool@marvel.com</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone</strong></td>  
+                    <td><strong>:</strong> 1234567890</td>
+                </tr>
+            </table>
         </div>
 
 
@@ -39,29 +55,29 @@
                         <tr>
                             <td class="text-center" style="vertical-align: middle">${loop.index}</td>
                             <td style="vertical-align: middle">
-                                <div>   
-                                    <div class="col-md-2" style="vertical-align: middle">
+                                <div class="media">
+                                    <div class="media-left">
                                         <img src="images/items/${loop.index}_ava.jpg" class="img-rounded top-left" alt="item_1" width="204" height="120">                                   
                                     </div>
-                                    <div class="col-md-10">
-                                        <strong>Name: Some name!</strong>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Name: Some name!</h4>
                                         <p>Description: Something like "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit
                                             augue duis dolore te feugait nulla facilisi."</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="text-center" style="vertical-align: middle">$${(loop.index+1)*100}</td>
-                            <td class="text-center" style="vertical-align: middle">${loop.index+1}</td>
+                            <td class="text-center" style="vertical-align: middle"><input type="number" class="form-control" value="${loop.index+1}"></td>
                             <td class="text-right" style="vertical-align: middle">$${(loop.index+1)*100*(loop.index+1)}</td>
                         </tr>
                         <jstl:set var="total" value="${total + (loop.index+1)*100*(loop.index+1)}"/>
                     </jstl:forEach>
+                    <tr class="alert alert-warning">
+                        <td><strong>Total</strong></td> 
+                        <td class ="text-right" colspan="4"><strong>$${total}</strong></td>
+                    </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="alert alert-success clearfix">
-            <strong>Total: $${total}</strong>
-            <button type="button" class="btn btn-success pull-right">Next step</button>      
         </div>
         <%@include  file="Footer.jsp" %>
     </body>
