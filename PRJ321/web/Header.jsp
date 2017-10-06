@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="icon" href="images/logo.png">
     </head>
     <body>
         <img src="images/banner.png"  style="width: 100% ;"/>
@@ -29,7 +30,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Trang chủ</a></li>
                         <li><a href="#">Sale</a></li>
-                       
+
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
                             <ul class="dropdown-menu">
