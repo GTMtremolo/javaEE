@@ -21,9 +21,9 @@
             <div class="row " >
                 <div class="col-sm-4">
                     <h3>Fanpage:</h3>
-                   <div class="fb-page" data-href="https://www.facebook.com/L&#x1ead;p-Tr&#xec;nh-Nh&#xfa;ng-143638259511428/" data-width="300" data-height="250" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/L&#x1ead;p-Tr&#xec;nh-Nh&#xfa;ng-143638259511428/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/L&#x1ead;p-Tr&#xec;nh-Nh&#xfa;ng-143638259511428/">Lập Trình Nhúng</a></blockquote></div>
-               </div>
-                  
+<div class="fb-page" data-href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/">Web bán game và phụ kiện</a></blockquote></div> 
+                </div>
+
                 <div class="col-sm-4">
                     <h3>Thông tin liên hệ: </h3>
                     <p><b>Địa chỉ:</b> Phòng Đai học FPT , Tân Xã Thạch Hòa Thạch Thất Hà Nội</p>
@@ -31,20 +31,19 @@
                     <p>---------------</p>
                     <p><b>SĐT tư vấn mua hàng:</b>0987654321</p>
                 </div>
-                
+
                 <div class="col-sm-4 pull-right"  >
                     <br/>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.979456257939!2d105.85019721435859!3d21.03350799299337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abbf7fb1baed%3A0x90c05e1ee6bbec6e!2zQsO6biBuZ2FuIE5ow6Bu!5e0!3m2!1sen!2s!4v1507018834361"  height="250"  frameborder="0" style="border:0" allowfullscreen ></iframe>
-
+                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.4814943885453!2d105.524278214225!3d21.01341178600666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454b32ca5086d%3A0xa3c62e29d8ab37e4!2zRlBUIFVuaXZlcnNpdHkgSMOyYSBM4bqhYw!5e0!3m2!1sen!2s!4v1507263433844"  height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>  
             </div>
-           
+
 
         </div>
-        
-         <div class="row" style="margin-top: 10px; color: white; background-color: #3B3738; text-align: center">
-                <div class="col-sm-12" style="padding: 10px"><h3>Copyright © 2017 · PRJ321 PROJECT</h3></div>
-            </div>
+
+        <div class="row" style="margin-top: 10px; color: white; background-color: #3B3738; text-align: center">
+            <div class="col-sm-12" style="padding: 10px"><h3>Copyright © 2017 · PRJ321 PROJECT</h3></div>
+        </div>
 
         <!--facebook sdk--> 
         <div id="fb-root"></div>
@@ -57,10 +56,10 @@
                 js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.10&appId=1774295316197245";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
-        
+
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        
+
 
 
 
