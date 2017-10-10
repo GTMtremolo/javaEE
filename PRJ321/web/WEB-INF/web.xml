@@ -4,13 +4,34 @@
         <servlet-name>Test</servlet-name>
         <servlet-class>com.controller.Test</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubEmailServlet</servlet-name>
+        <servlet-class>com.controller.SubEmailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SpamEmailServlet</servlet-name>
+        <servlet-class>com.controller.SpamEmailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/Test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubEmailServlet</servlet-name>
+        <url-pattern>/SubEmailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SpamEmailServlet</servlet-name>
+        <url-pattern>/SpamEmailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>
+            Home.jsp
+        </welcome-file>
+    </welcome-file-list>
 </web-app>
