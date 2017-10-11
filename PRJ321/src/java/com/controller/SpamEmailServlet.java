@@ -1,88 +1,95 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.controller;
 
+import com.entity.SpamResult;
+import com.entity.SubEmail;
+import com.model.SubEmailModel;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author snail
- */
 public class SpamEmailServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            String from = request.getParameter("txtEmail");
             String header = request.getParameter("txtHeader");
-            String host = "localhost";
+            String content = request.getParameter("txtContent");
+            if (request.getParameter("btnSpam") != null) {
+                try {
+                    ArrayList<Thread> spamThreads = new ArrayList<>();
+                    spamResults = new ArrayList<>();
+                    ArrayList<SubEmail> subEmails = new SubEmailModel().getAll();
+                    for (SubEmail subEmail : subEmails) {
+                        if (subEmail.isSubscribed()) {
+                            //Start new spam email thread
+                            EmailSpammer emailSpammer
+                                    = new EmailSpammer(subEmail.getEmail(), header, content);
+                            Thread spamThread = new Thread(emailSpammer);
+                            spamThread.start();
+                            spamThreads.add(spamThread);
+                        }
+                    }
+                    for (Thread spamThread : spamThreads) {
+                        spamThread.join();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpamEmailServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
-            // Get system properties
-            Properties properties = System.getProperties();
-
-            // Setup mail server
-            properties.setProperty("mail.smtp.host", host);
-
+            request.setAttribute("spamResults", spamResults);
+            request.getRequestDispatcher("SpamEmailResult.jsp").forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
+
+    ArrayList<SpamResult> spamResults;
+
+    public class EmailSpammer implements Runnable {
+
+        String mail, header, content;
+
+        public EmailSpammer(String mail, String header, String content) {
+            this.mail = mail;
+            this.header = header;
+            this.content = content;
+        }
+
+        @Override
+        public void run() {
+            SendMail sendMail = new SendMail();
+            if (sendMail.send(mail, header, content)) {
+                spamResults.add(new SpamResult(mail, new Date(), true));
+            } else {
+                spamResults.add(new SpamResult(mail, new Date(), false));
+            }
+        }
+
+    }
 
 }

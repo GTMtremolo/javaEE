@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.controller;
 
 import com.model.SubEmailModel;
@@ -10,25 +15,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SubEmailServlet extends HttpServlet {
+/**
+ *
+ * @author snail
+ */
+public class UnsubEmailServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String email = (String) request.getParameter("txtSubemail");
-            final String header = "Greetings from Divine Shop - Games and Gears";
-            String content = "You have subscribed to news and sales from Divine Shop - Games and Gears\n"
-                    + "You can cancel your subscribe by following the link be low!\n"
-                    + "Unsubscribe here: http://localhost:8080/PRJ321/UnsubEmailServlet?txtSubemail=";
             try {
-                if (new SubEmailModel().subscribe(email)) {
+                if (new SubEmailModel().unsubscribe(email)) {
                     request.setAttribute("subEmail", email);
-                    request.getRequestDispatcher("SubEmail.jsp").forward(request, response);
-                    content += email;
-                    new Thread(new SendMail(email, header, content)).start();
+                    request.getRequestDispatcher("UnsubEmail.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("SubEmail.jsp").forward(request, response);
+                    request.getRequestDispatcher("UnsubEmail.jsp").forward(request, response);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(SubEmailServlet.class.getName()).log(Level.SEVERE, null, ex);

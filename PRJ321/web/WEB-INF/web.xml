@@ -12,6 +12,10 @@
         <servlet-name>SpamEmailServlet</servlet-name>
         <servlet-class>com.controller.SpamEmailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UnsubEmailServlet</servlet-name>
+        <servlet-class>com.controller.UnsubEmailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>SpamEmailServlet</servlet-name>
         <url-pattern>/SpamEmailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnsubEmailServlet</servlet-name>
+        <url-pattern>/UnsubEmailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -36,6 +36,36 @@ public class SubEmailModel {
         return subEmails;
     }
 
+    //Return true if unsubscribe completed
+    public boolean unsubscribe(String email) throws Exception {
+        System.out.println(email);
+        if (email == null || email.length() == 0
+                || !validate(email)) {
+            return false;
+        } else {
+            try {
+                Connection connection = new DBContext().getConnection();
+                String queryStr;
+                PreparedStatement ps;
+                //Update SubEmail status to unsubscribed, return true
+                queryStr = "UPDATE SubEmailTBL "
+                        + "SET [Subscribed] = ? WHERE Email = ?";
+                ps = connection.prepareStatement(queryStr);
+                ps.setBoolean(1, false);
+                ps.setString(2, email);
+
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
+                return true;
+            } catch (SQLException e) {
+                String str = e.toString();
+                System.out.println(str);
+                return false;
+            }
+        }
+    }
+
     //Return true if subscribe completed
     public boolean subscribe(String email) throws Exception {
         if (email == null || email.length() == 0
@@ -59,6 +89,9 @@ public class SubEmailModel {
                 ps = connection.prepareStatement(query);
                 ps.setBoolean(1, true);
                 ps.setString(2, email);
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
                 return true;
             }
         }

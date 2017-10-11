@@ -27,7 +27,7 @@
                     <textarea name="txtContent" class="form-control" rows="15">
                     </textarea>
                 </div>
-                <input type="submit" value="Spam" class="btn btn-danger" />
+                <input type="submit" name="btnSpam" value="Spam" class="btn btn-danger" />
             </form>
         </div>
         <%@include file="Footer.jsp"%>
