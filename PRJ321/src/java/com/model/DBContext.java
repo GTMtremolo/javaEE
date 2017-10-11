@@ -31,5 +31,5 @@ public class DBContext {
     private final String dbName = "ShopGameDB";
     private final String portNumber = "1433";
     private final String userID = "sa";
-    private final String password = "sa";
+    private final String password = "12345678";
 }

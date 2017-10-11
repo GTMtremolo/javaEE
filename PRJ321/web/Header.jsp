@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +16,8 @@
         <link rel="icon" href="images/logo.png">
     </head>
     <body>
+
+        <jsp:useBean id="categoryBean" class="com.bean.CategoryBean" scope="session"/>
         <img src="images/banner.png"  style="width: 100% ;"/>
         <nav class="navbar navbar-inverse navbar-default">
             <div class="container-fluid">
@@ -34,10 +37,11 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Early Access</a></li>
-                                <li><a href="#">RGP</a></li>
+                                
+
+                                <c:forEach var="p" items="${categoryBean.categories}">
+                                    <li><a href="#">${p.name}</a></li>
+                                    </c:forEach>
                             </ul>
                         </li>
                         <li><a href="#">Wallet</a></li>

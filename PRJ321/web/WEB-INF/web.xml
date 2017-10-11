@@ -32,6 +32,14 @@
         <servlet-name>UnsubEmailServlet</servlet-name>
         <url-pattern>/UnsubEmailServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadProduct</servlet-name>
+        <servlet-class>com.controller.UploadProduct</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadProduct</servlet-name>
+        <url-pattern>/UploadProduct</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
