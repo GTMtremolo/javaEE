@@ -19,6 +19,9 @@
         <%@include file="Header.jsp"%>
         <div class="well-lg container">
             <%--USER INFO--%>
+            <!--        <div class="alert alert-danger">
+                        <strong>User information: N/A</strong>
+                    </div>-->
             <div class="alert alert-info">         
                 <table class="table-responsive">
                     <tr>
