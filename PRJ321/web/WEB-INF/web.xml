@@ -16,6 +16,10 @@
         <servlet-name>UnsubEmailServlet</servlet-name>
         <servlet-class>com.controller.UnsubEmailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaymentCOD</servlet-name>
+        <servlet-class>com.controller.PaymentCOD</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>UnsubEmailServlet</servlet-name>
         <url-pattern>/UnsubEmailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentCOD</servlet-name>
+        <url-pattern>/PaymentCOD</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
