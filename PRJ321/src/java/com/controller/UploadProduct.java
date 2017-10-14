@@ -97,6 +97,7 @@ public class UploadProduct extends HttpServlet {
                 System.out.println("");
                 ProductContext pc = new ProductContext();
                 int id = pc.getMaxID();
+                
                 for (int i = 0; i < formItems.size(); i++) {
                     FileItem item = formItems.get(i);
                     // processes only fields that are not form fields
@@ -109,10 +110,10 @@ public class UploadProduct extends HttpServlet {
                         fileName = id + "_" + i + ".png";
                         String filePath = uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
-                        pathImages.add(filePath);
+                        pathImages.add("imgs/"+ fileName);
                         // saves the file on disk
                         item.write(storeFile);
-
+                        
                     } else {
 
                         String fileName = item.getFieldName();
@@ -145,6 +146,7 @@ public class UploadProduct extends HttpServlet {
                                 Double.parseDouble(price));
                         boolean flag1 = pc.insertProduct(p);
                         boolean flag2 = pc.insertProductImgs(pathImages, id);
+                        pathImages.clear();
                         if(flag1&& flag2){
                             HttpSession session = request.getSession();
                             session.setAttribute("message", "upload product has done!");

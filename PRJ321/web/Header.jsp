@@ -17,7 +17,7 @@
     </head>
     <body>
 
-        <jsp:useBean id="categoryBean" class="com.bean.CategoryBean" scope="session"/>
+        <jsp:useBean id="categoryBean" class="com.bean.CategoryBean" scope="request"/>
         <img src="images/banner.png"  style="width: 100% ;"/>
         <nav class="navbar navbar-inverse navbar-default">
             <div class="container-fluid">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Trang chủ</a></li>
+                        <li class="active"><a href="Home.jsp">Trang chủ</a></li>
                         <li><a href="#">Sale</a></li>
 
                         <li class="dropdown">
@@ -40,7 +40,11 @@
                                 
 
                                 <c:forEach var="p" items="${categoryBean.categories}">
-                                    <li><a href="#">${p.name}</a></li>
+                                    <c:url var="u" value="ListProduct.jsp">
+                                        <c:param name="category" value="${p.id}"/>
+                                    </c:url>
+                                    <li><a href="${u}">${p.name}</a></li>
+                                    
                                     </c:forEach>
                             </ul>
                         </li>
@@ -66,7 +70,7 @@
             </div>
         </nav>
 
-
+        
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 

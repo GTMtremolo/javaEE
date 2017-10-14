@@ -11,6 +11,8 @@ package com.entity;
  */
 public class Product {
     private int id, amount , category;
+    private String name, detail;
+    private double unitPrice;
 
     public int getCategory() {
         return category;
@@ -28,8 +30,7 @@ public class Product {
         this.detail = detail;
         this.unitPrice = unitPrice;
     }
-    private String name, detail;
-    private double unitPrice;
+    
 
     public Product() {
     }

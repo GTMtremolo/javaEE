@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="icon" href="images/logo.png">
@@ -19,10 +20,10 @@
     <body>
 
         <%@include file="Header.jsp"%>
-        
+
         <div class="container well-lg">
             ${sessionScope.message}
-            <form class="form-horizontal"  action="UploadProduct" method="post" enctype = "multipart/form-data">
+            <form class="form-horizontal"  action="UploadProduct" method="post" enctype = "multipart/form-data" id="myform">
                 <!--NAME AND DETAILS-->
                 <div class="container col-sm-12">
                     <!--Product name-->
@@ -80,13 +81,13 @@
                     </div>
                     <!--Add product button-->
                     <div class="col-sm-6 text-right">   
-                        <input type="submit" value="Add Product" name="btnAdd"  class="btn btn-success btn-block"/>
+                        <input type="submit" value="Add Product" name="btnAdd"  class="btn btn-success btn-block" id="btnSubmit"/>
                     </div>
                 </div>
             </form>
         </div>
-            
-            
+
+
         <%@include file="Footer.jsp"%>
 
         <script>
@@ -107,26 +108,28 @@
             function PreViewImages(input) {
 
                 if (input.files) {
-                    for(var i = 0; i< input.files.length; i++){
+                    for (var i = 0; i < input.files.length; i++) {
                         var file = input.files[i];
                         var reader = new FileReader();
                         console.log(i);
                         reader.onload = function (e) {
-                        $('.preAll').append('<img class="img-rounded imageChooser" src="'+ e.target.result +  '"/>');
-                    }
+                            $('.preAll').append('<img class="img-rounded imageChooser" src="' + e.target.result + '"/>');
+                        }
 
                         reader.readAsDataURL(input.files[i]);
                     }
-                    
+
                 }
             }
 
             $("#files1").change(function () {
-            PreViewImages(this);
+                PreViewImages(this);
             });
-            $("#files").change(function () {
-            readURL(this);
-            });
+
+           window.onload= function (){
+               document.getElementById("myForm").reset();
+           }
+
         </script>
     </body>
 </html>
