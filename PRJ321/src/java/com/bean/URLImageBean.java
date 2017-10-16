@@ -30,7 +30,7 @@ public class URLImageBean {
     public URLImageBean() {
         productID = -1;
     }
-    public List<URLImage> getUrlImages() throws Exception {
+        public List<URLImage> getUrlImages() throws Exception {
         List<URLImage> urlImages = new ArrayList<URLImage>();
         String query = "SELECT TOP 1000 [ProductID]\n"
                 + "      ,[URLImage]\n"
