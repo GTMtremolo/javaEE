@@ -22,8 +22,8 @@
         <%@include file="Header.jsp"%>
 
         <div class="container well-lg">
-            ${sessionScope.message}
-            <form class="form-horizontal"  action="UploadProduct" method="post" enctype = "multipart/form-data" id="myform">
+            ${message}
+            <form class="form-horizontal"  action="upload" method="post" enctype = "multipart/form-data" id="myform">
                 <!--NAME AND DETAILS-->
                 <div class="container col-sm-12">
                     <!--Product name-->
@@ -67,7 +67,7 @@
                 <div class="input-group" id="selectAva">
                     <span class="input-group-btn">
                         <label for="files1" class="btn-info btn">Browse</label>
-                        <input type="file" class="form-control-file" id="files1" aria-describedby="fileHelp" style="display: none" accept="image/*" multiple name="imgDetail"  size = "50" />
+                        <input type="file" class="form-control-file" id="files1" aria-describedby="fileHelp" style="display: none" accept="image/*" multiple name="myFile"  size = "50" />
                     </span>
                     <input type="text" class="form-control" placeholder="Pick images" disabled>
                 </div>
