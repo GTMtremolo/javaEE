@@ -107,7 +107,7 @@ public class uploadFile extends ActionSupport implements ServletRequestAware {
                     Double.parseDouble(txtPrice));
             
             for (int i = 0; i < myFile.length; i++) {
-                myFileFileName[i] = id+ "_"+i;
+                myFileFileName[i] = id+ "_"+i+".png";
                 parthImage.add("imgs/"+ myFileFileName[i]);
                 File destFile = new File(destPath, myFileFileName[i]);
 
