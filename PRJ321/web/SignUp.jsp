@@ -3,7 +3,7 @@
     Created on : Oct 5, 2017, 3:57:10 PM
     Author     : daisy
 --%>
-
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,14 +20,21 @@
         <%@include file="Header.jsp"%>
 
         <div class="container">
+
+            <c:if test="${message != null}">
+                <div class="alert alert-danger">
+                    ${message}
+
+                </div>
+            </c:if>
             <div class="row ">
                 <div class="col-sm-9">
                     <h1>Đăng ký tài khoản</h1>
                     <p>Nếu bạn đã có tài khoản vui lòng đăng nhập tại <a href="Login.jsp" style="text-decoration: none">đây</a></p>
                     <h3>Thông tin cá nhân</h3>
                     <hr />
-                    <form class="form-horizontal">
-                        
+                    <form class="form-horizontal" action="CustomerController" method="post">
+
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="lastName">* Họ và tên </label>
                             <div class="col-sm-10"> 
@@ -61,14 +68,14 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="pwd">*Mật khẩu:</label>
                             <div class="col-sm-10"> 
-                                <input type="password" class="form-control" id="pwd" name="txtPwd" placeholder="Mật khẩu">
+                                <input type="password" class="form-control" id="pwd" name="txtPwd" placeholder="Mật khẩu" value="">
                             </div>
                         </div> 
 
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="rePwd">* Nhập lại mật khẩu:</label>
                             <div class="col-sm-10"> 
-                                <input type="password" class="form-control" id="rePwd" name="txtRePwd" placeholder="Nhập lại mật khẩu">
+                                <input type="password" value="" class="form-control" id="rePwd" name="txtRePwd" placeholder="Nhập lại mật khẩu">
                             </div>
                         </div>
 
@@ -76,7 +83,7 @@
                         <div class="form-group"> 
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="txtConfim"> Tôi đã đọc và đồng ý với<a href="#"> điều khoản Chính sách bảo mật</a></label>
+                                    <label><input type="checkbox" name="txtConfim" value="confirm"> Tôi đã đọc và đồng ý với<a href="#"> điều khoản Chính sách bảo mật</a></label>
                                 </div>
                             </div>
                         </div>

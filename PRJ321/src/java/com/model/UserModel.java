@@ -44,6 +44,36 @@ public class UserModel {
         return u;
     }
 
+    public void insertUserRole(String email) throws Exception {
+        int id = getUserID(email);
+        String query = "INSERT INTO [dbo].[AccountRoleTBL]\n"
+                + "           ([AccountID]\n"
+                + "           ,[RoleID])\n"
+                + "     VALUES\n"
+                + "           (?,?)";
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+        ps.setInt(1, id);
+        ps.setInt(2, 2);
+        ps.execute();
+    }
+
+    public int getUserID(String email) throws Exception {
+        int id = 0;
+        String query = "SELECT TOP 1000 [AccountID]\n"
+                + "      [Email]\n"
+                + "  FROM [ShopGameDB].[dbo].[UserTBL] where Email = ?";
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            id = rs.getInt("Email");
+
+        }
+        rs.close();
+        ps.close();
+        return id;
+    }
+
     public String getRole(int id) throws Exception {
         String role = "";
         String query = "SELECT TOP 1000 [AccountID]\n"
@@ -62,5 +92,26 @@ public class UserModel {
         rs.close();
         ps.close();
         return role;
+    }
+
+    public void instertUser(User u) throws Exception {
+        String query = "INSERT INTO [dbo].[UserTBL]\n"
+                + "           ([Name]\n"
+                + "           ,[Address]\n"
+                + "           ,[Email]\n"
+                + "           ,[PhoneNumber]\n"
+                + "           ,[password])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?)";
+
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+        ps.setString(1, u.getName());
+        ps.setString(2, u.getAddress());
+        ps.setString(3, u.getEmail());
+        ps.setString(4, u.getPhone());
+        ps.setString(5, u.getPwd());
+
+         ps.execute();
+
     }
 }

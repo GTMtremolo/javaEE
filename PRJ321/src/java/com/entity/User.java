@@ -20,6 +20,15 @@ public class User {
     public User() {
     }
 
+    public User(String name, String address, String email, String phone, String pwd) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.pwd = pwd;
+    }
+
+    
     public User(int acountID, String name, String address, String email, String phone, String pwd) {
         this.acountID = acountID;
         this.name = name;

@@ -53,6 +53,10 @@
         <servlet-name>ImageController</servlet-name>
         <servlet-class>com.controller.ImageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CustomerController</servlet-name>
+        <servlet-class>com.controller.CustomerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -96,6 +100,10 @@
     <servlet-mapping>
         <servlet-name>ImageController</servlet-name>
         <url-pattern>/ImageController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerController</servlet-name>
+        <url-pattern>/CustomerController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
