@@ -16,7 +16,7 @@
         <link rel="icon" href="images/logo.png">
         <title>home</title>
     </head>
-    <body>
+    <body >
 
         <%@include file="Header.jsp"%>
 

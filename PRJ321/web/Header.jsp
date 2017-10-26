@@ -37,15 +37,15 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                
+
 
                                 <c:forEach var="p" items="${categoryBean.categories}">
                                     <c:url var="u" value="ListProduct.jsp">
                                         <c:param name="category" value="${p.id}"/>
                                     </c:url>
                                     <li><a href="${u}">${p.name}</a></li>
-                                    
-                                    </c:forEach>
+
+                                </c:forEach>
                             </ul>
                         </li>
                         <li><a href="#">Wallet</a></li>
@@ -63,14 +63,33 @@
                         <li><a href="#">Thanh toán</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
-                        <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Đăng nhập</a></li>
+                        
+                            
+                        <c:choose>
+                            <c:when test="${sessionScope.LoginUser!= null}">
+                                <li><a href="admin/index.jsp"><span  class="glyphicon glyphicon-user" >   ${sessionScope.LoginUser.name}</span></a></li>
+                            </c:when>
+                            
+                            <c:otherwise>
+                                <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Đăng nhập</a></li> 
+                            </c:otherwise>
+                        </c:choose>
+                        
+                        <c:choose>
+                            <c:when test="${sessionScope.LoginUser!= null}">
+                                <li><a href="/PRJ321/LogoutController"><span class="glyphicon glyphicon-log-out" >   Logout</span></a></li>
+                            </c:when>
+                            
+                            <c:otherwise>
+                               <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        
+
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 

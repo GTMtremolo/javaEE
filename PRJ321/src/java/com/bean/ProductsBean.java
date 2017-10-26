@@ -20,7 +20,24 @@ import java.util.List;
 public class ProductsBean implements Serializable {
 
     private int category;
+    private String productID;
 
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public ArrayList<String> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(ArrayList<String> productImages) {
+        this.productImages = productImages;
+    }
+    
     public ProductsBean() {
         category = 9;
     }
@@ -59,6 +76,32 @@ public class ProductsBean implements Serializable {
         }
 
         return products;
+    }
+    
+    public Product getProduct() throws Exception {
+        Product product = null;
+        String query = "SELECT  [ProductID]\n"
+                + "      ,[ProductName]\n"
+                + "      ,[UnitPrice]\n"
+                + "      ,[Amount]\n"
+                + "      ,[Details]\n"
+                + "      ,[CategoryID]\n"
+                + "  FROM [ShopGameDB].[dbo].[ProductTBL]\n"
+                + "  where ProductID = " + productID;
+
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String name = rs.getString("productName");
+            Double price = rs.getDouble("UnitPrice");
+            int id = rs.getInt("ProductID");
+            int quantity = rs.getInt("Amount");
+            String detail = rs.getString("Details");
+            int categoryId = rs.getInt("CategoryId");
+            product = new Product(id, quantity, categoryId, name, detail, price);
+        }
+
+        return product;
     }
     
 }

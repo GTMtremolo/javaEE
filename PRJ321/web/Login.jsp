@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,8 +19,13 @@
     <body>
 
         <%@include file="Header.jsp"%>
-
+        
         <div class="container">
+            <jstl:if test="${sessionScope.LoginError!=null}">
+                <div class="alert alert-danger">
+                   <strong>${sessionScope.LoginError}</strong> 
+                </div>
+            </jstl:if>
             <div class="row ">
                 <div class="col-sm-4 background4">
                     <h4><b>Khách hàng mới</b></h4>
@@ -33,17 +39,17 @@
                     <h4><b>Khách hàng cũ</b></h4>
                     <hr style="border: 1px solid #999"/>
                     <p><b>Tôi là khách hàng cũ</b></p>
-                    <form>
+                    <form action="LoginController" method="post">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="email" class="form-control" placeholder="Email" value="" name="txtEmail">
                         </div>
                         <div class="form-group">
                             <label>Mật Khẩu</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" class="form-control" placeholder="Password" value="" name="txtPwd">
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                        <input type="submit" class="btn btn-primary" value="Login" name="btnLogin"/>
                     </form>
                 </div>
                 <div class="col-sm-3 ">

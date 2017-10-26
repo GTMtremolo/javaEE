@@ -4,11 +4,16 @@
 
 <struts>
     <!-- Configuration for the default package. -->
-    <constant name="struts.action.excludePattern" value="/LoginController,/SendMail,/SpamEmailServlet,/SubEmailServlet,/Test,/UnsubEmailServlet,/SearchServlet"/>
+    <constant name="struts.action.excludePattern" value="/LoginController,/SendMail,/SpamEmailServlet,/SubEmailServlet,/Test,/UnsubEmailServlet,/SearchServlet,/LoginController,/LogoutController,/ProductController,/ImageController"/>
     <package name="default" extends="struts-default">
         <action name="upload" class="com.action.uploadFile">
-                <result name="success">/AddProduct.jsp</result>
-                <result name="error">/AddProduct.jsp</result>
+                <result name="success" type="redirect">/admin/AddProduct.jsp</result>
+                <result name="error" type="redirect">/admin/AddProduct.jsp</result>
+        </action>
+        
+        <action name="update" class="com.action.UpdateProduct">
+                <result name="success" type="redirect">/admin/Update.jsp</result>
+                <result name="error" type="redirect">/admin/Update.jsp</result>
         </action>
     </package>
 </struts>

@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
@@ -106,6 +107,9 @@ public class uploadFile extends ActionSupport implements ServletRequestAware {
                     txtDetail,
                     Double.parseDouble(txtPrice));
             
+            pc.insertProduct(p);
+            id = pc.getMaxID()-1;
+            
             for (int i = 0; i < myFile.length; i++) {
                 myFileFileName[i] = id+ "_"+i+".png";
                 parthImage.add("imgs/"+ myFileFileName[i]);
@@ -113,16 +117,18 @@ public class uploadFile extends ActionSupport implements ServletRequestAware {
 
                 FileUtils.copyFile(myFile[i], destFile);
             }
-            pc.insertProduct(p);
+            
             pc.insertProductImgs(parthImage, id);
             
         } catch (IOException e) {
-            servletRequest.setAttribute("message", "upload error!!!!");
+            HttpSession session = servletRequest.getSession();
+            session.setAttribute("message", "upload error!!!!");
             e.printStackTrace();
             
             return ERROR;
         }
-        servletRequest.setAttribute("message", "upload success!!!");
+         HttpSession session = servletRequest.getSession();
+        session.setAttribute("message", "upload success!!!");
         return SUCCESS;
     }
 
