@@ -18,76 +18,114 @@
     <body>
         <%@include file="Header.jsp"%>
         <div class="well-lg container">
-            <%--USER INFO--%>
-            <!--        <div class="alert alert-danger">
-                        <strong>User information: N/A</strong>
-                    </div>-->
-            <div class="alert alert-info">         
-                <table class="table-responsive">
-                    <tr>
-                        <td><strong>Username</strong></td>  
-                        <td><strong>:</strong> Wade Wilson</td> 
-                    </tr>
-                    <tr>
-                        <td><strong>Email</strong></td>  
-                        <td><strong>:</strong> deadpool@marvel.com</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Phone</strong></td>  
-                        <td><strong>:</strong> 1234567890</td>
-                    </tr>
-                </table>
-            </div>
-
-            <%--PRODUCTS--%>
-            <jstl:set var="total" value="0"/>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="success">
-                            <th class="text-center">Index</th>
-                            <th class="text-center">Product</th>
-                            <th class="text-center">Price</th>
-                            <th class="text-center">Quantity</th>
-                            <th class="text-right">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <jstl:forEach begin="0" end="5" varStatus="loop">
+            <jstl:if test="${cart.hasProduct()}">
+                <form action="PaymentServlet" method="POST">
+                    <%--USER INFO--%>
+                    <div class="alert alert-info">         
+                        <table class="table-responsive">
                             <tr>
-                                <td class="text-center" style="vertical-align: middle">${loop.index+1}</td>
-                                <td style="vertical-align: middle">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img src="images/items/${loop.index}_ava.jpg" class="img-rounded top-left" alt="item_1" width="204" height="120">                                   
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">Some cool name</h4>
-                                            <p>Something like "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat."</p>
-                                        </div>
-                                    </div>
-                                <td class="text-center" style="vertical-align: middle"><fmt:formatNumber type="currency" value="${(loop.index+1)*100}"/></td>
-                                <td class="text-center" style="vertical-align: middle"><input type="number" class="form-control" value="${loop.index+1}"></td>
-                                <td class="text-right" style="vertical-align: middle"><fmt:formatNumber type="currency" value="${(loop.index+1)*100*(loop.index+1)}"/></td>
+                                <td><strong>Username</strong></td>  
+                                <td><strong>:</strong> Wade Wilson</td> 
                             </tr>
-                            <jstl:set var="total" value="${total + (loop.index+1)*100*(loop.index+1)}"/>
-                        </jstl:forEach>
-                        <tr class="success">
-                            <td><strong>Total</strong></td> 
-                            <td class ="text-right" colspan="4"><strong><fmt:formatNumber type="currency" value="${total}"/></strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 text-left">
-                    <a href="#" class="btn btn-block btn-info">Shop for more!</a>
-                </div>
-                <div class="col-sm-6 text-right">   
-                    <a href="Payment.jsp" class="btn btn-block btn-success">Continue</a>
-                </div>
-            </div>
+                            <tr>
+                                <td><strong>Email</strong></td>  
+                                <td><strong>:</strong> deadpool@marvel.com</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone</strong></td>  
+                                <td><strong>:</strong> 1234567890</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <%--PRODUCTS--%>
+                    <jsp:useBean id="pb" scope="request" class="com.bean.ProductsBean"/>
+                    <jsp:useBean id="uib" scope="request" class="com.bean.URLImageBean"/>
+                    <jstl:set var="total" value="0"/>
+                    <div class="table-responsive">
+                        <table id="productTable" class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="success">
+                                    <th class="text-center">Index</th>
+                                    <th class="text-center">Product</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <jstl:forEach var="cartItem" items="${cart.cartItems}" varStatus="loop">
+                                    <!--Only show products that quantity >0-->
+                                    <jstl:if test="${cartItem.quantity>0}">
+                                        <c:set var="hasProduct" value="1"/>
+                                        <!--Get product from DB-->
+                                        <jsp:setProperty name="pb" property="id" value="${cartItem.productId}"/>
+                                        <c:set var="product" value="${pb.productById}"/> 
+                                        <!--Get product image from DB-->
+                                        <jsp:setProperty name="uib" property="productID" value="${cartItem.productId}"/>     
+                                        <tr>
+                                            <td class="text-center" style="vertical-align: middle">${loop.index+1}</td>
+                                            <td style="vertical-align: middle">
+                                                <div class="media">
+                                                    <!--Product image-->
+                                                    <div class="media-left">
+                                                        <img src="${uib.urlImages.get(0).imageURL}" class="img-rounded top-left" alt="item_1" width="204" height="120">                                   
+                                                    </div>
+                                                    <!--Product details-->
+                                                    <div class="media-body">
+                                                        <a href="ProductDetails.jsp?keyId=${cartItem.productId}">
+                                                            <h4 class="media-heading">${product.name}</h4>
+                                                        </a>                                            
+                                                        <p>${product.detail}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!--Price-->
+                                            <td class="text-center" style="vertical-align: middle" >$<span id="price${product.id}">${product.unitPrice}</span></td>
+                                            <!--Quantity-->
+                                            <td class="text-center" style="vertical-align: middle"><input id="quantity${product.id}" name="quantity${product.id}" type="number" min="0" max="10" class="form-control" value="${cartItem.quantity}" onchange="updateQuantity(${cartItem.productId})"></td>
+                                            <!--Total-->
+                                            <td class="text-right" style="vertical-align: middle">$<span id="total${product.id}" class="totalValue">${product.unitPrice*cartItem.quantity}</span></td>
+                                        </tr>
+                                        <jstl:set var="finalTotal" value="${total + (product.unitPrice)*(cartItem.quantity)}"/>
+                                    </jstl:if>
+                                </jstl:forEach>
+                                <tr class="success">
+                                    <td><strong>Total</strong></td> 
+                                    <td class ="text-right" colspan="4"><strong>$<span id="finalTotal">${finalTotal}</span></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <a href="Home.jsp" class="btn btn-block btn-info">Shop for more!</a>
+                        </div>
+                        <div class="col-sm-6 text-right">   
+                            <button class="btn btn-block btn-success" type="submit">Continue</button>
+                        </div>
+                    </div>
+                </jstl:if>
+                <jstl:if test="${!cart.hasProduct()}">
+                    <div class="col-sm-12 text-left well-lg alert-warning"><a href="Home.jsp">No product in cart, click to shop for more!</a></div>
+                </jstl:if>
+            </form>
         </div>
-        <%@include  file="Footer.jsp" %>
+        <%@include file="Footer.jsp" %>
     </body>
+    <script>
+        function updateQuantity(productId) {
+            var price = document.getElementById("price" + productId);
+            var quantity = document.getElementById("quantity" + productId);
+            var totalValues = document.getElementsByClassName("totalValue");
+//            Update total value
+            document.getElementById("total" + productId).innerHTML = (price.innerText * quantity.value).toFixed(1);
+
+//            Update final total
+            var sumTotalValues = 0;
+            for (var i = 0; i < totalValues.length; i++) {
+                sumTotalValues += parseFloat(totalValues[i].innerText);
+            }
+            document.getElementById("finalTotal").innerHTML = sumTotalValues.toFixed(1);
+        }
+    </script>
 </html>

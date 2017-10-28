@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +16,8 @@
         <link rel="icon" href="images/logo.png">
     </head>
     <body>
+
+        <jsp:useBean id="categoryBean" class="com.bean.CategoryBean" scope="request"/>
         <img src="images/banner.png"  style="width: 100% ;"/>
         <nav class="navbar navbar-inverse navbar-default">
             <div class="container-fluid">
@@ -28,16 +31,21 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Trang chủ</a></li>
+                        <li class="active"><a href="Home.jsp">Trang chủ</a></li>
                         <li><a href="#">Sale</a></li>
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Early Access</a></li>
-                                <li><a href="#">RGP</a></li>
+                                
+
+                                <c:forEach var="p" items="${categoryBean.categories}">
+                                    <c:url var="u" value="ListProduct.jsp">
+                                        <c:param name="category" value="${p.id}"/>
+                                    </c:url>
+                                    <li><a href="${u}">${p.name}</a></li>
+                                    
+                                    </c:forEach>
                             </ul>
                         </li>
                         <li><a href="#">Wallet</a></li>
@@ -62,7 +70,7 @@
             </div>
         </nav>
 
-
+        
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 

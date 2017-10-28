@@ -29,7 +29,7 @@ public class SubEmailModel {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            String email = rs.getNString("Email");
+            String email = rs.getString("Email");
             boolean isSubscribed = rs.getBoolean("Subscribed");
             subEmails.add(new SubEmail(email, isSubscribed));
         }
