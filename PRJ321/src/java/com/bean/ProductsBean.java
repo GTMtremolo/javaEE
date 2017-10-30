@@ -8,6 +8,7 @@ package com.bean;
 import com.entity.Product;
 import com.model.DBContext;
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ProductsBean implements Serializable {
 
     private int category;
+    private int id;
     private String productID;
 
     public String getProductID() {
@@ -30,6 +32,14 @@ public class ProductsBean implements Serializable {
         this.productID = productID;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public ArrayList<String> getProductImages() {
         return productImages;
     }
@@ -37,7 +47,7 @@ public class ProductsBean implements Serializable {
     public void setProductImages(ArrayList<String> productImages) {
         this.productImages = productImages;
     }
-    
+
     public ProductsBean() {
         category = 9;
     }
@@ -77,7 +87,7 @@ public class ProductsBean implements Serializable {
 
         return products;
     }
-    
+
     public Product getProduct() throws Exception {
         Product product = null;
         String query = "SELECT  [ProductID]\n"
@@ -103,5 +113,25 @@ public class ProductsBean implements Serializable {
 
         return product;
     }
-    
+
+    public Product getProductById() throws Exception {
+        String query = "SELECT *  FROM [ShopGameDB].[dbo].[ProductTBL]\n"
+                + "WHERE ProductID = ?";
+
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String name = rs.getString("productName");
+            double unitPrice = rs.getDouble("UnitPrice");
+            int id = rs.getInt("ProductID");
+            int amount = rs.getInt("Amount");
+            String details = rs.getString("Details");
+            int category = rs.getInt("CategoryId");
+            return new Product(id, amount, category, name, details, unitPrice);
+        }
+        return null;
+    }
 }
