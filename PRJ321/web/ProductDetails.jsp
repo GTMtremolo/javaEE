@@ -28,6 +28,25 @@
         </style>
     </head>
     <body>
+
+
+        <!--facebook api-->
+
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.10&appId=122467181776373';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <!--facebook api-->
+
+
+
         <%@include file="Header.jsp"%>    
         <div class="container">
             <!--Has no key ID parameter-->
@@ -54,35 +73,44 @@
 
                         <!--Product images carousel-->
                         <div class="container col-lg-4">
-                            <div id="carousel" class="carousel slide" data-ride="carousel">
-                                <!--Indicators-->
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carousel" data-slide-to="0" class="active"/>
-                                    <c:forEach begin="1" end="${maxIndex}" var="step">
-                                        <li data-target="#carousel" data-slide-to="${step}"/>
-                                    </c:forEach>
-                                </ol>
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img src="${imgs.get(0).imageURL}" class="product-image">
-                                    </div>
-                                    <c:forEach begin="1" end="${maxIndex}" var="step">
-                                        <div class="item">
-                                            <img src="${imgs.get(step).imageURL}">
+                            <c:choose>
+                                <c:when test="${!empty uib.urlImages}">
+                                    <div id="carousel" class="carousel slide" data-ride="carousel">
+                                        <!--Indicators-->
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#carousel" data-slide-to="0" class="active"/>
+                                            <c:forEach begin="1" end="${maxIndex}" var="step">
+                                                <li data-target="#carousel" data-slide-to="${step}"/>
+                                            </c:forEach>
+                                        </ol>
+                                        <!-- Wrapper for slides -->
+                                        <div class="carousel-inner">
+                                            <div class="item active">
+                                                <img src="${imgs.get(0).imageURL}" class="product-image">
+                                            </div>
+                                            <c:forEach begin="1" end="${maxIndex}" var="step">
+                                                <div class="item">
+                                                    <img src="${imgs.get(step).imageURL}">
+                                                </div>
+                                            </c:forEach>
                                         </div>
-                                    </c:forEach>
-                                </div>
-                                <!-- Left and right controls -->
-                                <a class="left carousel-control" href="#carousel" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
+                                        <!-- Left and right controls -->
+                                        <a class="left carousel-control" href="#carousel" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#carousel" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="width :100%; height: 300px; text-align: center; color: red"  ><b>Image not found!!</b></div>
+                                    
+                                </c:otherwise>
+                            </c:choose>
+
                         </div>
                         <div class="container col-lg-8" style="padding-bottom: 10px">
                             <!--Product info--> 
@@ -125,7 +153,12 @@
                     <div class="alert alert-warning">Invalid product ID!</div>
                 </c:if>
             </c:if>
+
+            <div class="fb-comments" data-href="http://localhost:8080/PRJ321/ListProduct.jsp?category=${param.keyId}" data-width="100%" data-numposts="5"></div>
+
+
         </div>
+            <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>
 </html>

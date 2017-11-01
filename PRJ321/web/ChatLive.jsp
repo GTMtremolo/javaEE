@@ -9,22 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="icon" href="images/logo.png">
+        
         <title>JSP Page</title>
     </head>
     <body>
-        <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/"
-             data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" 
-             data-show-facepile="true" data-show-posts="false">
-            <div class="fb-xfbml-parse-ignore">
-                <blockquote cite="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/">
-                    <a href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/">Advertiser Space</a>
-                </blockquote></div>
-        </div>
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.5";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div style="position:fixed; z-index:9999999; right:10px; bottom:10px;" class="fb-page" data-tabs="messages"
+             data-href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/" data-width="250" data-height="300" 
+             data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+  
     </body>
 </html>

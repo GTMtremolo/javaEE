@@ -131,6 +131,7 @@
             </div>
 
         </div>
+        <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
 
 

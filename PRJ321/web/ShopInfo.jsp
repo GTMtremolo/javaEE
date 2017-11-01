@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/slider.css">
         <link rel="icon" href="images/logo.png">
         <title>Shop info</title>
     </head>
@@ -22,6 +22,9 @@
             <img src="images/shopinfo.jpg" class="img-rounded" alt="shopinfo.jpg" width="100%">          
         </div>
         <br>
+        <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp" %>
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

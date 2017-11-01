@@ -110,6 +110,7 @@
                 </jstl:if>
             </form>
         </div>
+        <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp" %>
     </body>
     <script>

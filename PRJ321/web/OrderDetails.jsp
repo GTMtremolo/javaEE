@@ -32,10 +32,11 @@
         <div class="container">
             <p>Order time: ${orderDetail.orderDate}</p>
             <c:forEach var="cartItem" items="${orderDetail.cartItems}">
-                <p>ProductID: ${cartItem.productId}</p>
+                <p>Product ID: ${cartItem.productId}</p>
                 <p>Quantity: ${cartItem.quantity}</p>
             </c:forEach>
         </div>
+            <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>
 </html>

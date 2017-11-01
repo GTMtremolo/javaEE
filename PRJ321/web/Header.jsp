@@ -32,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="Home.jsp">Trang chủ</a></li>
-                        <li><a href="#">Sale</a></li>
+                       
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
@@ -48,17 +48,14 @@
                                 </c:forEach>
                             </ul>
                         </li>
-                        <li><a href="#">Wallet</a></li>
+                       
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hướng dẫn<span class="caret"></span></a>
                             <ul class="dropdown-menu ">
-                                <li><a href="#">Giới Thiệu Divine Shop</a></li>
-                                <li><a href="#">Giới thiệu Steam</a></li>
-                                <li><a href="#">Hướng dẫn mua game</a></li>
-                                <li ><a href="#">Hướng Dẫn nhận code game trên Steam</a></li>
+                                <li><a href="ShopInfo.jsp">Giới Thiệu Divine Shop</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">liên hệ</a></li>
+                       
                         <li><a href="Checkout.jsp">Giỏ hàng</a></li>
                         <li><a href="#">Thanh toán</a></li>
                     </ul>

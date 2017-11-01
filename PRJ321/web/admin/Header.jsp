@@ -49,18 +49,7 @@
                             </ul>
                         </li>
                         <li><a href="AddProduct.jsp">Add game</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hướng dẫn<span class="caret"></span></a>
-                            <ul class="dropdown-menu ">
-                                <li><a href="#">Giới Thiệu Divine Shop</a></li>
-                                <li><a href="#">Giới thiệu Steam</a></li>
-                                <li><a href="#">Hướng dẫn mua game</a></li>
-                                <li ><a href="#">Hướng Dẫn nhận code game trên Steam</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">liên hệ</a></li>
-                        <li><a href="#">Giỏ hàng</a></li>
-                        <li><a href="#">Thanh toán</a></li>
+                        
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
