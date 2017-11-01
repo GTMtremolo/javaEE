@@ -41,6 +41,10 @@ public class PaymentServlet extends HttpServlet {
             HttpSession session = request.getSession();
             cart = (Cart) session.getAttribute("cart");
 
+            if (cart == null) {
+                cart = new Cart();
+            }
+
             //Update quantity for cart
             for (CartItem cartItem : cart.getCartItems()) {
                 //Get & set quantity from request

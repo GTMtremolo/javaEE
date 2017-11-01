@@ -27,15 +27,28 @@
                 <div class="tab-content">
                     <!--COD-->
                     <div id="pay0" class="tab-pane fade in active well">
-                        <p>You can pay in cash to our carrier when you receive the goods at your doorstep.</p>
-                        <dl>
-                            <dt>Notice:</dt>
-                            <dd>- Remember to check your order information on the right since this information cannot be changed after we confirm your order.</dd>
-                            <dd>- Lazada.vn will not confirm your order via SMS so please check your order information in our notification email.</dd>
-                            <dd>- In order to protect our individual buyers, Lazada will limit the quantity of product per order. Also, we are sorry to reject those orders with many duplicated items (reseller threat).</dd>
-                            <dd>- Lazada does not provide door-to-door delivery service for apartment or office building.</dd>
-                        </dl>     
-                        <p class="text-warning">For all deliveries you will receive a personal invoice based on your account information when shopping at Lazada. To request a red invoice for taxation, please contact us within 7 days since purchase date. After this period, Lazada will not support to adjust from personal invoice to red invoice.</p>
+                        <!--Info-->
+                        <div class="container">
+                            <p>You can pay in cash to our carrier when you receive the goods at your doorstep.</p>
+                            <dl>
+                                <dt>Notice:</dt>
+                                <dd>- Remember to check your order information on the right since this information cannot be changed after we confirm your order.</dd>
+                                <dd>- Lazada.vn will not confirm your order via SMS so please check your order information in our notification email.</dd>
+                                <dd>- In order to protect our individual buyers, Lazada will limit the quantity of product per order. Also, we are sorry to reject those orders with many duplicated items (reseller threat).</dd>
+                                <dd>- Lazada does not provide door-to-door delivery service for apartment or office building.</dd>
+                            </dl>     
+                            <div class="text-warning" style="padding-right: 20px;">For all deliveries you will receive a personal invoice based on your account information when shopping at Lazada. To request a red invoice for taxation, please contact us within 7 days since purchase date. After this period, Lazada will not support to adjust from personal invoice to red invoice.</div>
+                        </div>
+                        <form action="OrderServlet" method="POST">
+                            <!--Address-->
+                            <div class="form-group" style="padding-top: 5px;">
+                                <label for="comment">Address: </label>
+                                <textarea class="form-control" rows="5" style=" height: 80px;" name="address" id="comment"></textarea>
+                            </div>
+                            <!--Order button-->                        
+                            <button type="submit" class="btn btn-block btn-success">Order with CoD</button>
+                            <input name="paymentMethod" value="COD" hidden/>
+                        </form>
                     </div>
                     <!--CREDIT CARD-->
                     <div id="pay1" class="tab-pane fade well">
@@ -87,9 +100,6 @@
                         Just kidding! :")
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4 text-left">   
-                <a href="#" class="btn btn-block btn-success">Order</a>
             </div>
         </div>
         <%@include  file="Footer.jsp" %>

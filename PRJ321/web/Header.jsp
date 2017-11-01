@@ -59,7 +59,7 @@
                             </ul>
                         </li>
                         <li><a href="#">liên hệ</a></li>
-                        <li><a href="#">Giỏ hàng</a></li>
+                        <li><a href="Checkout.jsp">Giỏ hàng</a></li>
                         <li><a href="#">Thanh toán</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

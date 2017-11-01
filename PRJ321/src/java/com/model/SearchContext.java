@@ -45,12 +45,38 @@ public class SearchContext {
         return arr;
     }
 
-    public ArrayList<DemoEntity> getListDemoEntity() throws SQLException {
+    public double getMaxPrice() throws SQLException {
+        String query = "select max(UnitPrice) as MaxPrice from ProductTBL";
+        PreparedStatement sta = conn.prepareStatement(query);
+        ResultSet rs = sta.executeQuery();
+        double maxPrice = 0;
+        while (rs.next()) {
+            maxPrice = rs.getDouble("MaxPrice");
+        }
+        rs.close();
+        sta.close();
+        return maxPrice;
+    }
+
+    public ArrayList<DemoEntity> getListDemoEntity(String name, double price, String category) throws SQLException {
         ArrayList<DemoEntity> arr = new ArrayList<DemoEntity>();
-        String query = "select top 12 pr.ProductName, pr.UnitPrice, ca.CategoryName, url.URLImage from ProductTBL pr, CategoryTBL ca, URLImageTBL url\n"
-                + " where pr.CategoryID = ca.CategoryID and pr.ProductID = url.ProductID";
+        String query = "select top 12 pr.ProductName, pr.UnitPrice, ca.CategoryName, url.URLImage from ProductTBL pr, CategoryTBL ca, URLImageTBL url "
+                + " where pr.CategoryID = ca.CategoryID and pr.ProductID = url.ProductID "
+                + " and pr.ProductName like ?"
+                + " and pr.UnitPrice <= (?) ";
+
+        if (category.length() > 0) {
+            query += " and ca.CategoryName = (?)";
+        }
 
         PreparedStatement sta = conn.prepareStatement(query);
+        sta.setString(1, '%' + name + '%');
+        sta.setDouble(2, price);
+
+        if (category.length() > 0) {
+            sta.setString(3, category);
+        }
+
         ResultSet rs = sta.executeQuery();
         while (rs.next()) {
             String productName = rs.getString("productName");

@@ -43,11 +43,36 @@ public class SearchServlet extends HttpServlet {
 
             SearchContext searchContext = new SearchContext();
             ArrayList<String> listCategoryName = searchContext.getListCategoryName();
-            ArrayList<DemoEntity> listDemoEntity = searchContext.getListDemoEntity();
+            ArrayList<DemoEntity> listDemoEntity = searchContext.getListDemoEntity("", searchContext.getMaxPrice(), "");
+
+            String btnSearch = request.getParameter("btnSearch");
+            if (btnSearch != null) {
+                String txtName = request.getParameter("txtName");
+                String value = request.getParameter("optradio");
+                String price = request.getParameter("sliPrice");
+                System.out.println("price = " + price);
+
+                double maxPrice = 0;
+                if (price == null) {
+                    maxPrice = searchContext.getMaxPrice();
+                } else {
+                    maxPrice = Double.parseDouble(price);
+                }
+
+                if (value == null) {
+                    value = "";
+                }
+                listDemoEntity = searchContext.getListDemoEntity(txtName, maxPrice, value);
+            }
+            
+            for(int i=0; i<listDemoEntity.size(); i++){
+                System.out.println(listDemoEntity.get(i).getUrlImage());
+            }
 
             request.setAttribute("listCategoryName", listCategoryName);
             request.setAttribute("listDemoEntity", listDemoEntity);
             request.getRequestDispatcher("Search.jsp").forward(request, response);
+
         }
     }
 

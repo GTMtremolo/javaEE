@@ -15,6 +15,25 @@ public class DemoEntity {
     private double unitPrice;
     private String categoryName;
     private String urlImage;
+    private String id ;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public DemoEntity(String productName, double unitPrice, String categoryName, String urlImage, String id) {
+        this.productName = productName;
+        this.unitPrice = unitPrice;
+        this.categoryName = categoryName;
+        this.urlImage = urlImage;
+        this.id = id;
+    }
+    
+    
 
     public DemoEntity(String productName, double unitPrice, String categoryName, String urlImage) {
         this.productName = productName;
