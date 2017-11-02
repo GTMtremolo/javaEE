@@ -40,6 +40,7 @@ public class OrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private final String COD = "COD";
+    private final String GOD = "GOD";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,36 +52,63 @@ public class OrderServlet extends HttpServlet {
             Cart cart = (Cart) session.getAttribute("cart");
             if (user != null) {
                 try {
-                    int cartId = new DBCartModel().getNextId(),
-                            accountId = user.getAcountID();
-
                     switch (paymentMethod) {
-                        case COD:
-                            int productId,
-                             quantity;
-                            for (CartItem cartItem : cart.getCartItems()) {
-                                productId = cartItem.getProductId();
-                                quantity = cartItem.getQuantity();
-//                              Insert cartItem to DB
-                                new DBCartModel().insertDBCart(
-                                        new DBCart(productId, quantity, cartId));
-                            }
-
-//                          Load data to bill
+                        //For COD
+                        case COD: {
                             int orderId = new BillModel().getNextId();
+                            int accountId = user.getAcountID();
+
+                            //Create bill
                             Date orderDate = new Date();
                             String state = "Not confirmed";
                             String address = (String) request.getParameter("address");
-                            Bill bill = new Bill(orderId, orderDate, accountId, cartId, state, address, paymentMethod);
-//                          Insert bill to DB
+                            Bill bill = new Bill(orderId, orderDate, accountId, state, address, paymentMethod);
+                            //Insert bill to DB
                             new BillModel().insertCodBill(bill);
 
-                            System.out.println("?");
+                            int productId,
+                                    quantity;
+                            //Insert cartItem to DB
+                            for (CartItem cartItem : cart.getCartItems()) {
+                                int cartId = new DBCartModel().getNextId();
+                                productId = cartItem.getProductId();
+                                quantity = cartItem.getQuantity();
+                                new DBCartModel().insertDBCart(
+                                        new DBCart(productId, quantity, cartId, orderId));
+                            }
+
                             break;
+                        }
+                        //For GOD
+                        case GOD: {
+                            int orderId = new BillModel().getNextId();
+                            int accountId = user.getAcountID();
+
+                            //Create bill
+                            Date orderDate = new Date();
+                            String state = "Not confirmed";
+                            String address = (String) request.getParameter("address");
+                            String note = (String) request.getParameter("note");
+                            Bill bill = new Bill(orderId, orderDate, accountId, state, address, note, paymentMethod);
+                            //Insert bill to DB
+                            new BillModel().insertGodBill(bill);
+
+                            for (CartItem cartItem : cart.getCartItems()) {
+                                int productId = cartItem.getProductId();
+                                int quantity = cartItem.getQuantity();
+                                int cartId = new DBCartModel().getNextId();
+                                
+                                //Insert cartItem to DB
+                                new DBCartModel().insertDBCart(
+                                        new DBCart(productId, quantity, cartId, orderId));
+                            }
+
+                            break;
+                        }
                     }
 
                     request.setAttribute("orderDetail", new OrderDetail(cart.getCartItems()));
-//                  Clear cart
+                    //Clear cart
                     session.setAttribute("cart", new Cart());
                     request.getRequestDispatcher("OrderDetails.jsp").forward(request, response);
                 } catch (Exception ex) {

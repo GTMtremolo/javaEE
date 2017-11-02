@@ -15,25 +15,23 @@ public class Bill {
 
     private int orderId;
     private Date orderDate;
-    private int accountId, cartId;
+    private int accountId;
     private String state, address, note, payment;
 
-    public Bill(int orderId, Date orderDate, int accountId, int cartId, String state, String address, String note, String payment) {
+    public Bill(int orderId, Date orderDate, int accountId, String state, String address, String note, String payment) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.accountId = accountId;
-        this.cartId = cartId;
         this.state = state;
         this.address = address;
         this.note = note;
         this.payment = payment;
     }
 
-    public Bill(int orderId, Date orderDate, int accountId, int cartId, String state, String address, String payment) {
+    public Bill(int orderId, Date orderDate, int accountId, String state, String address, String payment) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.accountId = accountId;
-        this.cartId = cartId;
         this.state = state;
         this.address = address;
         this.payment = payment;
@@ -61,14 +59,6 @@ public class Bill {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
-    }
-
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
     }
 
     public String getState() {

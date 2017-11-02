@@ -21,14 +21,13 @@ public class BillModel {
 
         String query = "SET IDENTITY_INSERT BillTBL ON\n"
                 + "INSERT INTO [dbo].[BillTBL]\n"
-                + "([OrderID],[OrderDate],[AccountID],[CartID],[State],[Address],[Payment])\n"
-                + "VALUES (?,?,?,?,?,?,?)";
+                + "([BillID],[OrderDate],[AccountID],[State],[Address],[Payment])\n"
+                + "VALUES (?,?,?,?,?,?)";
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
         int orderId = bill.getOrderId();
         Date orderDate = new Date(bill.getOrderDate().getTime());
-        int accountId = bill.getAccountId(),
-                cartId = bill.getCartId();
+        int accountId = bill.getAccountId();
         String state = bill.getState(),
                 address = bill.getAddress(),
                 payment = bill.getPayment();
@@ -36,16 +35,42 @@ public class BillModel {
         ps.setInt(1, orderId);
         ps.setDate(2, orderDate);
         ps.setInt(3, accountId);
-        ps.setInt(4, cartId);
-        ps.setNString(5, state);
-        ps.setNString(6, address);
-        ps.setString(7, payment);
+        ps.setNString(4, state);
+        ps.setNString(5, address);
+        ps.setString(6, payment);
+
+        ps.execute();
+    }
+
+    public void insertGodBill(Bill bill) throws Exception {
+
+        String query = "SET IDENTITY_INSERT BillTBL ON\n"
+                + "INSERT INTO [dbo].[BillTBL]\n"
+                + "([BillID],[OrderDate],[AccountID],[State],[Address],[Payment],[Note])\n"
+                + "VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+
+        int orderId = bill.getOrderId();
+        Date orderDate = new Date(bill.getOrderDate().getTime());
+        int accountId = bill.getAccountId();
+        String state = bill.getState(),
+                address = bill.getAddress(),
+                payment = bill.getPayment(),
+                note = bill.getNote();
+
+        ps.setInt(1, orderId);
+        ps.setDate(2, orderDate);
+        ps.setInt(3, accountId);
+        ps.setNString(4, state);
+        ps.setNString(5, address);
+        ps.setString(6, payment);
+        ps.setNString(7, note);
 
         ps.execute();
     }
 
     public int getNextId() throws Exception {
-        String query = "SELECT MAX(OrderID) "
+        String query = "SELECT MAX(BillID) "
                 + "FROM BillTBL ";
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
         ResultSet rs = ps.executeQuery();

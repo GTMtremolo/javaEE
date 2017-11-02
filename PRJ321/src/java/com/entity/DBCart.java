@@ -10,12 +10,21 @@ package com.entity;
  * @author rat
  */
 public class DBCart {
-    private int productId, quantity,cartId;
+    private int productId, quantity,cartId, billId;
 
-    public DBCart(int productId, int quantity, int cartId) {
+    public DBCart(int productId, int quantity, int cartId, int oderId) {
         this.productId = productId;
         this.quantity = quantity;
         this.cartId = cartId;
+        this.billId = oderId;
+    }
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
     }
 
     public int getCartId() {

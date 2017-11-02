@@ -20,19 +20,25 @@ import java.util.List;
 public class DBCartModel {
 
     public void insertDBCart(DBCart dbCart) throws Exception {
-        String query = "INSERT INTO [dbo].[CartTBL]\n"
+        String query = "SET IDENTITY_INSERT CartTBL ON\n"
+                + "INSERT INTO [dbo].[CartTBL]\n"
                 + "           ([ProductID]\n"
-                + "           ,[Quantity])\n"
+                + "           ,[Quantity]\n"
+                + "           ,[CartID]"
+                + "           ,[BillID])\n"
                 + "     VALUES\n"
-                + "           (?,?)";
+                + "           (?,?,?,?)";
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
-        int cartId = dbCart.getCartId();
-        int productId = dbCart.getProductId(),
-                quantity = dbCart.getQuantity();
+        int cartId = dbCart.getCartId(),
+                productId = dbCart.getProductId(),
+                quantity = dbCart.getQuantity(),
+                billId = dbCart.getBillId();
 
         ps.setInt(1, productId);
         ps.setInt(2, quantity);
+        ps.setInt(3, cartId);
+        ps.setInt(4, billId);
 
         ps.execute();
     }

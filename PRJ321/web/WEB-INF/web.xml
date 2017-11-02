@@ -149,4 +149,7 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.filter.LoginFilter</filter-class>
     </filter>
+    <welcome-file-list>
+        <welcome-file>Home.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
