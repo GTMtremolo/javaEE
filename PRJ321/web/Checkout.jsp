@@ -18,25 +18,31 @@
     <body>
         <%@include file="Header.jsp"%>
         <div class="well-lg container">
+            <%--USER INFO--%>       
+            <jstl:if test="${sessionScope.LoginUser!=null}">
+                <div class="alert alert-info">  
+                    <table class="table-responsive">
+                        <tr>
+                            <td><strong>Username</strong></td>  
+                            <td><strong>:</strong> ${sessionScope.LoginUser.name}</td> 
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>  
+                            <td><strong>:</strong> ${sessionScope.LoginUser.email}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phone</strong></td>  
+                            <td><strong>:</strong> ${sessionScope.LoginUser.phone}</td>
+                        </tr>
+                    </table>
+                </div>
+            </jstl:if>
+            <jstl:if test="${sessionScope.LoginUser==null}">
+                <div class="alert alert-warning">You're not logged in!</div>
+            </jstl:if>
+            <!--View products-->
             <jstl:if test="${cart.hasProduct()}">
                 <form action="PaymentServlet" method="POST">
-                    <%--USER INFO--%>
-                    <div class="alert alert-info">         
-                        <table class="table-responsive">
-                            <tr>
-                                <td><strong>Username</strong></td>  
-                                <td><strong>:</strong> Wade Wilson</td> 
-                            </tr>
-                            <tr>
-                                <td><strong>Email</strong></td>  
-                                <td><strong>:</strong> deadpool@marvel.com</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Phone</strong></td>  
-                                <td><strong>:</strong> 1234567890</td>
-                            </tr>
-                        </table>
-                    </div>
                     <%--PRODUCTS--%>
                     <jsp:useBean id="pb" scope="request" class="com.bean.ProductsBean"/>
                     <jsp:useBean id="uib" scope="request" class="com.bean.URLImageBean"/>
