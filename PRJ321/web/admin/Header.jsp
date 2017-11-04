@@ -49,6 +49,10 @@
                             </ul>
                         </li>
                         <li><a href="AddProduct.jsp">Add game</a></li>
+                        <li><a href="CustomerInfor.jsp">Customer Infor</a></li>
+                        <li><a href="SpamEmail.jsp">Send Email</a></li>
+                        <li><a href="Confirm.jsp">Confirm Order</a></li>
+                        
                         
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

@@ -11,7 +11,31 @@ package com.entity;
  */
 public class CartItem {
 
-    int productId, quantity;
+   private int productId, quantity, cartId, billId;
+
+    public CartItem(int productId, int quantity, int cartId, int billId) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.cartId = cartId;
+        this.billId = billId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+   
 
     public CartItem(int productId, int quantity) {
         this.productId = productId;

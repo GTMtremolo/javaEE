@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -26,14 +27,14 @@ public class BillModel {
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
         int orderId = bill.getOrderId();
-        Date orderDate = new Date(bill.getOrderDate().getTime());
+        Timestamp orderDate = new Timestamp(bill.getOrderDate().getTime());
         int accountId = bill.getAccountId();
         String state = bill.getState(),
                 address = bill.getAddress(),
                 payment = bill.getPayment();
 
         ps.setInt(1, orderId);
-        ps.setDate(2, orderDate);
+        ps.setTimestamp(2, orderDate);
         ps.setInt(3, accountId);
         ps.setNString(4, state);
         ps.setNString(5, address);
@@ -51,7 +52,7 @@ public class BillModel {
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
         int orderId = bill.getOrderId();
-        Date orderDate = new Date(bill.getOrderDate().getTime());
+        Timestamp orderDate = new Timestamp(bill.getOrderDate().getTime());
         int accountId = bill.getAccountId();
         String state = bill.getState(),
                 address = bill.getAddress(),
@@ -59,7 +60,7 @@ public class BillModel {
                 note = bill.getNote();
 
         ps.setInt(1, orderId);
-        ps.setDate(2, orderDate);
+        ps.setTimestamp( 2, orderDate);
         ps.setInt(3, accountId);
         ps.setNString(4, state);
         ps.setNString(5, address);

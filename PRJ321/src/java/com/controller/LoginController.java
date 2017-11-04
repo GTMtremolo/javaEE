@@ -51,6 +51,7 @@ public class LoginController extends HttpServlet {
                             session.setAttribute("UserRole", "admin");
                             String contextPath = request.getContextPath();
                             response.sendRedirect(contextPath + "/admin/index.jsp");
+                           
                         }
                         session.setAttribute("LoginUser", u);
                         session.removeAttribute("LoginError");
