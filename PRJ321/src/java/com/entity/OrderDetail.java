@@ -18,10 +18,16 @@ public class OrderDetail {
 
     Date orderDate;
     ArrayList<CartItem> cartItems;
+    int sum;
 
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
     public OrderDetail(ArrayList<CartItem> cartItems) {
         orderDate = new Date();
         this.cartItems = cartItems;
+        sum= 0;
     }
 
     public ArrayList<CartItem> getCartItems() {
@@ -31,5 +37,16 @@ public class OrderDetail {
     public Date getOrderDate() {
         return orderDate;
     }
+    
+    
+    public double getSum() {
+        int ans = 0;
+        for (int i = 0; i < cartItems.size(); i++) {
+            CartItem item = cartItems.get(i);
+            ans += item.getUnitPrice() * item.getQuantity();
+        }
+        return ans;
+    }
+
 
 }

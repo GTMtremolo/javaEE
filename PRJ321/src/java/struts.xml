@@ -4,7 +4,7 @@
 
 <struts>
     <!-- Configuration for the default package. -->
-    <constant name="struts.action.excludePattern" value="/OrderServlet,/PaymentServlet,/AddToCartServlet,/LoginController,/SendMail,/SpamEmailServlet,/SubEmailServlet,/Test,/UnsubEmailServlet,/SearchServlet,/LoginController,/LogoutController,/ProductController,/ImageController,/CustomerController"/>
+    <constant name="struts.action.excludePattern" value="/GetOrderHistoryServlet,/OrderServlet,/PaymentServlet,/AddToCartServlet,/LoginController,/SendMail,/SpamEmailServlet,/SubEmailServlet,/Test,/UnsubEmailServlet,/SearchServlet,/LoginController,/LogoutController,/ProductController,/ImageController,/CustomerController"/>
     <package name="default" extends="struts-default">
         <action name="upload" class="com.action.uploadFile">
                 <result name="success" type="redirect">/admin/AddProduct.jsp</result>

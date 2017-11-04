@@ -28,15 +28,62 @@
         </style>
     </head>
     <body>
-        <%@include file="Header.jsp"%>    
+        <%@include file="Header.jsp"%>
+
         <div class="container">
-            <p>Order time: ${orderDetail.orderDate}</p>
-            <c:forEach var="cartItem" items="${orderDetail.cartItems}">
-                <p>Product ID: ${cartItem.productId}</p>
-                <p>Quantity: ${cartItem.quantity}</p>
-            </c:forEach>
+            <h2> Đơn hàng của tôi </h2>  
+            <br>
+            <form action="GetOrderHistoryServlet">
+                Bill ID : 
+                <select name="billID" onchange="document.forms[0].submit()">
+                    <c:forEach var="orr" items="${orderList}">                
+                        <option value="${orr.orderId}" ${ orr.orderId == param.billID ? 'selected' : '' } >${orr.orderId}</option>            
+                    </c:forEach>
+                </select>
+            </form>
         </div>
-            <%@include file="ChatLive.jsp"%>
+
+        <br> <br>
+
+
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Detail</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <c:forEach var="cartItem" items="${orderDetail.cartItems}">
+                        <tr>
+                            <th><img src="${cartItem.url}" style="width: 100px;
+                                     height: 100px" class="img-responsive center-block img-rounded"/></th>
+                            <th> ${cartItem.productId} </th>
+                            <th> ${cartItem.productName} </th>
+                            <th> ${cartItem.quantity} </th>
+                            <th> ${cartItem.unitPrice} </th>
+                            <th> ${cartItem.productDetail} </th>
+                            <th> ${cartItem.sum} </th>
+                            <th> 
+                                <input type="button" value="doisp">
+                            </th>
+                        </tr>
+                    </c:forEach>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="container" style="text-align:right; font-weight: bold;">
+            Total: ${orderDetail.sum}
+        </div>
+
+        <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>
 </html>

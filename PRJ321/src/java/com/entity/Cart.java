@@ -16,15 +16,20 @@ import java.util.HashMap;
 public class Cart {
 
     ArrayList<CartItem> cartItems;
+    int sum;
 
     public Cart() {
         cartItems = new ArrayList<>();
+        sum = 0;
     }
 
     public ArrayList<CartItem> getCartItems() {
         return cartItems;
     }
-
+    
+    
+    
+    
     public void addToCart(int productId, int quantity) {
         if (hasProduct(productId)) {
             addQuantity(productId, quantity);
@@ -57,6 +62,16 @@ public class Cart {
             }
         }
         return false;
+    }
+
+    
+    public double getSum() {
+        int ans = 0;
+        for (int i = 0; i < cartItems.size(); i++) {
+            CartItem item = cartItems.get(i);
+            ans += item.getUnitPrice() * item.getQuantity();
+        }
+        return ans;
     }
 
 }

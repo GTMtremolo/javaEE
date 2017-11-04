@@ -15,6 +15,7 @@ import com.model.BillModel;
 import com.model.DBCartModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,13 +51,15 @@ public class OrderServlet extends HttpServlet {
             String paymentMethod = request.getParameter("paymentMethod");
             User user = (User) session.getAttribute("LoginUser");
             Cart cart = (Cart) session.getAttribute("cart");
+
+            int accountId = user.getAcountID();
+            int orderId = new BillModel().getNextId();
+
             if (user != null) {
                 try {
                     switch (paymentMethod) {
                         //For COD
                         case COD: {
-                            int orderId = new BillModel().getNextId();
-                            int accountId = user.getAcountID();
 
                             //Create bill
                             Date orderDate = new Date();
@@ -81,8 +84,6 @@ public class OrderServlet extends HttpServlet {
                         }
                         //For GOD
                         case GOD: {
-                            int orderId = new BillModel().getNextId();
-                            int accountId = user.getAcountID();
 
                             //Create bill
                             Date orderDate = new Date();
@@ -97,7 +98,7 @@ public class OrderServlet extends HttpServlet {
                                 int productId = cartItem.getProductId();
                                 int quantity = cartItem.getQuantity();
                                 int cartId = new DBCartModel().getNextId();
-                                
+
                                 //Insert cartItem to DB
                                 new DBCartModel().insertDBCart(
                                         new DBCart(productId, quantity, cartId, orderId));
@@ -107,7 +108,13 @@ public class OrderServlet extends HttpServlet {
                         }
                     }
 
-                    request.setAttribute("orderDetail", new OrderDetail(cart.getCartItems()));
+                    ArrayList<Bill> arr = new BillModel().getAllOrder(accountId);
+                    request.setAttribute("orderList", arr);
+
+                    ArrayList<CartItem> cartItems = new BillModel().getAllCartItemByBillID(orderId);
+                    request.setAttribute("orderDetail", new OrderDetail(cartItems));
+                    request.setAttribute("billID", orderId);
+
                     //Clear cart
                     session.setAttribute("cart", new Cart());
                     request.getRequestDispatcher("OrderDetails.jsp").forward(request, response);
