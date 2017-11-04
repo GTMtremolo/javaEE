@@ -56,11 +56,18 @@ public class GetOrderHistoryServlet extends HttpServlet {
             request.setAttribute("orderList", orderList);
 
             String billID = request.getParameter("billID");
+            
+            if(billID == null){
+                billID = new BillModel().getLastBillID(accountId);
+            }
+            
             ArrayList<CartItem> cartItems = new BillModel().getAllCartItemByBillID(Integer.parseInt(billID));
             request.setAttribute("orderDetail", new OrderDetail(cartItems));
 
             request.setAttribute("billID", billID);
             request.getRequestDispatcher("OrderDetails.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(GetOrderHistoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

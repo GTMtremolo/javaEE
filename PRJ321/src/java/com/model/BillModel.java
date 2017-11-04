@@ -62,7 +62,7 @@ public class BillModel {
                 note = bill.getNote();
 
         ps.setInt(1, orderId);
-        ps.setTimestamp( 2, orderDate);
+        ps.setTimestamp(2, orderDate);
         ps.setInt(3, accountId);
         ps.setNString(4, state);
         ps.setNString(5, address);
@@ -85,9 +85,7 @@ public class BillModel {
             return 0;
         }
     }
-    
-    
-    
+
     public ArrayList<Bill> getAllOrder(int accountID) throws SQLException {
         ArrayList<Bill> arr = new ArrayList<Bill>();
         String query = "select * from BillTBL where AccountID = (?)";
@@ -109,10 +107,6 @@ public class BillModel {
         return arr;
     }
 
-    
-    
-    
-    
     public ArrayList<CartItem> getAllCartItemByBillID(int billID) throws SQLException {
         ArrayList<CartItem> arr = new ArrayList<>();
 
@@ -136,6 +130,24 @@ public class BillModel {
         ps.close();
 
         return arr;
+    }
+
+    public String getLastBillID(int accountId) throws Exception{
+        String query = "SELECT MAX(BillID) FROM BillTBL "
+                + "WHERE AccountID = ?";
+        
+        PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
+        ps.setInt(1, accountId);
+        ResultSet rs = ps.executeQuery();
+
+        int lastId = 0;
+        while (rs.next()) {
+            lastId = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+
+        return Integer.toString(lastId);
     }
 
 }

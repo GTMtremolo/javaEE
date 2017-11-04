@@ -57,7 +57,8 @@
                         </li>
                        
                         <li><a href="Checkout.jsp">Giỏ hàng</a></li>
-                        <li><a href="Payment.jsp">Thanh toán</a></li>
+                        <li><a href="Payment.jsp">Thanh toán</a></li>                        
+                        <li><a href="GetOrderHistoryServlet">Lịch sử</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         

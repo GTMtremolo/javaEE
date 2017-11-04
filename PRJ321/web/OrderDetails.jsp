@@ -37,7 +37,7 @@
                 Bill ID : 
                 <select name="billID" onchange="document.forms[0].submit()">
                     <c:forEach var="orr" items="${orderList}">                
-                        <option value="${orr.orderId}" ${ orr.orderId == param.billID ? 'selected' : '' } >${orr.orderId}</option>            
+                        <option value="${orr.orderId}" ${ orr.orderId == billID ? 'selected' : '' } >${orr.orderId}</option>            
                     </c:forEach>
                 </select>
             </form>
