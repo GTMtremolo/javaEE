@@ -13,9 +13,11 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" href="images/logo.png">
-        <title>Đăng ký</title>
+        <title>SignUp</title>
+
+
     </head>
-    <body>
+    <body >
 
         <%@include file="Header.jsp"%>
 
@@ -28,15 +30,15 @@
                 </div>
             </c:if>
             <div class="row ">
-                <div class="col-sm-9">
-                    <h1>Đăng ký tài khoản</h1>
-                    <p>Nếu bạn đã có tài khoản vui lòng đăng nhập tại <a href="Login.jsp" style="text-decoration: none">đây</a></p>
-                    <h3>Thông tin cá nhân</h3>
+                <div class="col-sm-9 col-sm-offset-1">
+                    <h1>Create a new account</h1>
+                    <p>If you have account click <a href="Login.jsp" style="text-decoration: none">here</a></p>
+                    <h3>Information</h3>
                     <hr />
                     <form class="form-horizontal" action="CustomerController" method="post">
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="lastName">* Họ và tên </label>
+                            <label class="control-label col-sm-2" for="lastName">* Name </label>
                             <div class="col-sm-10"> 
                                 <input type="text" class="form-control" id="lastName" name ="txtName" placeholder="Họ và tên đệm">
                             </div>
@@ -48,32 +50,32 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="phone">Điện Thoại:</label>
+                            <label class="control-label col-sm-2" for="phone">Phone:</label>
                             <div class="col-sm-10">
                                 <input type="txt" class="form-control" id="phone" name="txtPhone" placeholder="Số điện thoại">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="phone">Địa chỉ:</label>
+                            <label class="control-label col-sm-2" for="phone">Address:</label>
                             <div class="col-sm-10">
                                 <input type="txt" class="form-control" id="phone" name="txtAddress" placeholder="Đia chỉ">
                             </div>
                         </div>
                         <br />
 
-                        <h3>Mật khẩu</h3>
+                        <h3>Password</h3>
                         <hr />
 
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="pwd">*Mật khẩu:</label>
+                            <label class="control-label col-sm-2" for="pwd">*Password:</label>
                             <div class="col-sm-10"> 
                                 <input type="password" class="form-control" id="pwd" name="txtPwd" placeholder="Mật khẩu" value="">
                             </div>
                         </div> 
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="rePwd">* Nhập lại mật khẩu:</label>
+                            <label class="control-label col-sm-2" for="rePwd">* Re-Enter password :</label>
                             <div class="col-sm-10"> 
                                 <input type="password" value="" class="form-control" id="rePwd" name="txtRePwd" placeholder="Nhập lại mật khẩu">
                             </div>
@@ -83,31 +85,18 @@
                         <div class="form-group"> 
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="txtConfim" value="confirm"> Tôi đã đọc và đồng ý với<a href="#"> điều khoản Chính sách bảo mật</a></label>
+                                    <label><input type="checkbox" name="txtConfim" value="confirm"> I have read and agree to <a href="#"> the Privacy Policy</a></label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group"> 
                             <div class="col-sm-offset-2 col-sm-10">
-                                <input type="submit" class="btn btn-success" name="btnSignUp" value="Đăng ký"/>
+                                <input type="submit" class="btn btn-success" name="btnSignUp" value="SignUp"/>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-3 ">
-                    <table class="table">
-                        <thead><th>Tài Khoản</th></thead>
-                        <tr><td><a href="#" style="text-decoration: none">Đăng nhập</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Đăng ký</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Quên mật khẩu</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Tài khoản của tôi</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Danh sách địa chỉ</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Giỏ hàng</a></td></tr>
-                        <tr><td><a href="#" style="text-decoration: none">Lịch sử đơn hàng</a></td></tr>
-
-
-                    </table>
-                </div>
+                
             </div>
 
         </div>

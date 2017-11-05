@@ -22,7 +22,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 col-lg-offset-2">
+                <div class="col-sm-12">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">

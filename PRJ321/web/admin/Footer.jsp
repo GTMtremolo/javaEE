@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="col-sm-4">      
-                    <h3>Thông tin liên hệ: </h3>
-                    <p><b>Địa chỉ:</b> Phòng Đai học FPT , Tân Xã Thạch Hòa Thạch Thất Hà Nội</p>
-                    <p><b>SĐT:</b> 0987654321</p>
+                    <h3>Contact: </h3>
+                    <p><b>Address:</b> FPT University, SE1112, PRJ321</p>
+                    <p><b>Phone:</b> 0987654321</p>
                     <p>---------------</p>             
                     <!--Regist for emails-->
                     <p><b>Subscribe for news:</b></p>
@@ -40,7 +40,7 @@
                         </div>
                     </form>
                     <p>---------------</p>     
-                    <p><b>SĐT tư vấn mua hàng: </b>0987654321</p> 
+                    <p><b>Hot line: </b>0987654321</p> 
                 </div>
 
                 <div class="col-sm-4 pull-right"  >

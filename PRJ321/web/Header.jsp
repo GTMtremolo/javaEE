@@ -31,11 +31,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="Home.jsp">Trang chủ</a></li>
+                        <li class="active"><a href="Home.jsp">Home</a></li>
                        
 
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game<span class="caret"></span></a>
                             <ul class="dropdown-menu">
 
 
@@ -50,26 +50,31 @@
                         </li>
                        
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hướng dẫn<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Introduce<span class="caret"></span></a>
                             <ul class="dropdown-menu ">
-                                <li><a href="ShopInfo.jsp">Giới Thiệu Divine Shop</a></li>
+                                <li><a href="ShopInfo.jsp">Introduce Divine Shop</a></li>
                             </ul>
                         </li>
                        
-                        <li><a href="Checkout.jsp">Giỏ hàng</a></li>
-                        <li><a href="Payment.jsp">Thanh toán</a></li>                        
-                        <li><a href="GetOrderHistoryServlet">Lịch sử</a></li>
+                        <li><a href="Checkout.jsp">Cart</a></li>
+                        <li><a href="Payment.jsp">Payment</a></li>                        
+                        <li><a href="GetOrderHistoryServlet">History Order</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
                             
                         <c:choose>
-                            <c:when test="${sessionScope.LoginUser!= null}">
+                           <c:when test="${sessionScope.LoginUser!= null  && sessionScope.UserRole eq \"admin\"}">
                                 <li><a href="admin/index.jsp"><span  class="glyphicon glyphicon-user" >   ${sessionScope.LoginUser.name}</span></a></li>
+                            </c:when>
+                            <c:when test="${sessionScope.LoginUser!= null  && ! (sessionScope.UserRole eq \"admin\")}">
+                              
+                                <li><a href="CustomerInfor.jsp"><span  class="glyphicon glyphicon-user" >   ${sessionScope.LoginUser.name}</span></a></li>
+                                
                             </c:when>
                             
                             <c:otherwise>
-                                <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Đăng nhập</a></li> 
+                                <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li> 
                             </c:otherwise>
                         </c:choose>
                         
@@ -79,7 +84,7 @@
                             </c:when>
                             
                             <c:otherwise>
-                               <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
+                               <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-user"></span> SignUp</a></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

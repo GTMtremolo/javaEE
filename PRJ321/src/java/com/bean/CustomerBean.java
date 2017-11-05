@@ -24,6 +24,52 @@ public class CustomerBean implements Serializable {
 
     int accountID;
     String password;
+    
+     String pwd;
+    String name;
+    String phone;
+    String adderss;
+    String email;
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAdderss() {
+        return adderss;
+    }
+
+    public void setAdderss(String adderss) {
+        this.adderss = adderss;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -96,14 +142,26 @@ public class CustomerBean implements Serializable {
     }
     
     public boolean getChangePassword() throws Exception {
-       
+
         String query = "UPDATE [ShopGameDB].[dbo].[UserTBL]\n"
-                + "   SET \n"
-                + "      [password] = "+password
-                + " where AccountID = "+accountID;
+                + "   SET [password] = "+pwd
+                + " WHERE AccountID = " + accountID;
 
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
-        ps.setString(1, password);
-        return  ps.execute();
+
+        return ps.execute();
+    }
+     public boolean getChangeInfo() throws Exception {
+
+        String query = "UPDATE [ShopGameDB].[dbo].[UserTBL]\n"
+                + "   SET [Name] = '"+ name
+                + "      ',[Address] = '"+adderss
+                + "      ',[Email] = '"+email
+                + "      ',[PhoneNumber] = "+phone
+                + " WHERE AccountID = " + accountID;
+
+        PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+
+        return ps.execute();
     }
 }

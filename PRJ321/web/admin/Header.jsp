@@ -31,11 +31,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="../Home.jsp">Trang chủ</a></li>
+                        <li class="active"><a href="../Home.jsp">Home</a></li>
                         <li><a href="#">Sale</a></li>
 
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game bản quyền<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Game<span class="caret"></span></a>
                             <ul class="dropdown-menu">
 
 
@@ -65,8 +65,8 @@
                             </c:when>
                             
                             <c:otherwise>
-                                <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Đăng nhập</a></li> 
-                                 <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
+                                <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li> 
+                                 <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-user"></span> SignUp</a></li>
                             </c:otherwise>
                         </c:choose>
                         
