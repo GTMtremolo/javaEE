@@ -37,7 +37,7 @@
              data-href="https://www.facebook.com/Web-b%C3%A1n-game-v%C3%A0-ph%E1%BB%A5-ki%E1%BB%87n-1742631946038822/" data-width="250" data-height="300" 
              data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
         <button type="button" id="toggleChatBtn" style=" border: none; background: none; box-shadow: none; position:fixed; z-index:9999999; right:10px; bottom:10px;" onclick="toggleLiveChat()">
-            <span class="glyphicon glyphicon-comment" style="font-size: 250%; padding: 0px; color: #5bc0de;"></span>
+            <span class="glyphicon glyphicon-comment" style="font-size: 250%; padding: 0px; color: #101010;"></span>
         </button>
     </body>
 </html>

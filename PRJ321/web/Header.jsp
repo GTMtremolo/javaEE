@@ -58,7 +58,7 @@
                        
                         <li><a href="Checkout.jsp">Cart</a></li>
                         <li><a href="Payment.jsp">Payment</a></li>                        
-                        <li><a href="GetOrderHistoryServlet">History Order</a></li>
+                        <li><a href="GetOrderHistoryServlet">Order History</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
