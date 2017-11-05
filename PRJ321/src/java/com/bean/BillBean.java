@@ -96,7 +96,7 @@ public class BillBean implements Serializable {
         return ps.execute();
     }
 
-    public boolean isBillCanceled(String billId) throws Exception {
+    public String getBillState(String billId) throws Exception {
         String query = "select * from BillTBL where BillID = ?";
         PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
         ps.setString(1, billId);
@@ -104,10 +104,25 @@ public class BillBean implements Serializable {
 
         while (rs.next()) {
             String state = rs.getString("State");
-            return state.compareTo("Canceled") == 0;
+            rs.close();
+            return state;
         }
 
-        return false;
+        return null;
     }
 
+    public String getBillNote(String billId) throws Exception {
+        String query = "select * from BillTBL where BillID = ?";
+        PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
+        ps.setString(1, billId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            String note = rs.getString("Note");
+            rs.close();
+            return note;
+        }
+
+        return null;
+    }
 }

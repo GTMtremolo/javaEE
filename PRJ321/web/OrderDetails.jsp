@@ -33,32 +33,40 @@
 
         <div class="container">
             <h2> My orders </h2>  
-            <div class="col-lg-4">
-                <form action="GetOrderHistoryServlet">
-                    Bill ID : 
-                    <select name="billID" onchange="document.forms[0].submit()">
-                        <c:forEach var="orr" items="${orderList}">                
-                            <option value="${orr.orderId}" ${ orr.orderId == billID ? 'selected' : '' } >${orr.orderId}</option>            
-                        </c:forEach>
-                    </select>
-                </form>
-            </div>            
-            <div class="col-lg-4">Order date: <fmt:formatDate value="${orderDetail.orderDate}" pattern="MM/dd/yyyy"/></div>
+            <div class="container">
+                <div class="col-lg-4">
+                    <form action="GetOrderHistoryServlet">
+                        Bill ID : 
+                        <select name="billID" onchange="document.forms[0].submit()">
+                            <c:forEach var="orr" items="${orderList}">                
+                                <option value="${orr.orderId}" ${ orr.orderId == billID ? 'selected' : '' } >${orr.orderId}</option>            
+                            </c:forEach>
+                        </select>
+                    </form>
+                </div>            
+                <div class="col-lg-8">Order date: <fmt:formatDate value="${orderDetail.orderDate}" pattern="MM/dd/yyyy"/></div>
+            </div>
 
             <!--Show cancel order button if order not canceled-->
             <jsp:useBean id="bB" scope="request" class="com.bean.BillBean"/>
-            <c:set var="canceled" value="${bB.isBillCanceled(billID)}"/>
-            <c:if test="${!canceled}">                
-                <form action="CancelOrderServlet?billId=${billID}" method="POST" onsubmit="return confirm('You sure want to cancel the order?')">
-                    <div class="col-lg-4"><button type="submit" class="btn btn-danger">Cancel order</button></div>                    
-                </form>
+            <c:set var="billState" value="${bB.getBillState(billID)}"/>
+            <c:if test="${billState!='Canceled'}">   
+                <br>
+                <div class="col-lg-12 alert alert-info">
+                    <div class="col-lg-10" style="padding-top: 5px;">
+                        Status: ${billState}
+                    </div>
+                    <form action="CancelOrderServlet?billId=${billID}" method="POST" onsubmit="return confirm('You sure want to cancel the order?')">
+                        <div class="col-lg-2"><button type="submit" class="btn btn-danger pull-right" >Cancel order</button></div>                    
+                    </form>
+                </div>
             </c:if>
             <!--Show canceled warning if order canceled-->    
-            <c:if test="${canceled}">                
-                <div class="col-lg-4 alert alert-warning col-lg-8"><strong>Order canceled</strong></div>
-                    </c:if>
+            <c:if test="${billState=='Canceled'}"> 
+                <br>
+                <div class="col-lg-12 alert alert-warning"><strong>Status: Order canceled</strong></div>
+            </c:if>
         </div>
-        <br>
 
         <div class="container">
             <div class="table-responsive">
@@ -96,7 +104,12 @@
         <div class="container" style="text-align:right; font-weight: bold;">
             Total: ${orderDetail.sum}
         </div>
-
+        <c:if test="${bB.getBillNote(billID)!=null}">
+            <div class="container" style="height: 200px;">   
+                <label for="note">Note: </label>
+                <textarea class="rounded" id="note"readonly style="width: 100%; height: 100%; resize: none; background: #f5f5f5; border-radius: 1rem; padding: 5px;">${bB.getBillNote(billID)}</textarea>
+            </div>
+        </c:if>
         <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>
