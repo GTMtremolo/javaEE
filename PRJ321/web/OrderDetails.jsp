@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,8 +32,7 @@
         <%@include file="Header.jsp"%>
 
         <div class="container">
-            <h2> Đơn hàng của tôi </h2>  
-            <br>
+            <h2> My orders </h2>  
             <form action="GetOrderHistoryServlet">
                 Bill ID : 
                 <select name="billID" onchange="document.forms[0].submit()">
@@ -42,27 +42,26 @@
                 </select>
             </form>
         </div>
-
-        <br> <br>
-
+        <br>
 
         <div class="container">
+            <p>Order date: <fmt:formatDate value="${orderDetail.orderDate}" pattern="MM/dd/yyyy"/></p>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped table-bordered">
                     <tr>
-                        <th>Image</th>
+                        <th style="width: 320px;">Image</th>
                         <th>Product ID</th>
                         <th>Product Name</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Detail</th>
                         <th>Total</th>
-                        <th></th>
+                        <th>Action</th>
                     </tr>
                     <c:forEach var="cartItem" items="${orderDetail.cartItems}">
                         <tr>
-                            <th><img src="${cartItem.url}" style="width: 100px;
-                                     height: 100px" class="img-responsive center-block img-rounded"/></th>
+                            <th><img src="${cartItem.url}" style="width: 320px;
+                                     height: 189px;" class="img-responsive center-block img-rounded"/></th>
                             <th> ${cartItem.productId} </th>
                             <th> ${cartItem.productName} </th>
                             <th> ${cartItem.quantity} </th>
@@ -70,7 +69,7 @@
                             <th> ${cartItem.productDetail} </th>
                             <th> ${cartItem.sum} </th>
                             <th> 
-                                <input type="button" value="doisp">
+                                <input class="btn btn-warning" type="button" value="doisp">
                             </th>
                         </tr>
                     </c:forEach>
