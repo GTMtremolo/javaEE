@@ -33,19 +33,34 @@
 
         <div class="container">
             <h2> My orders </h2>  
-            <form action="GetOrderHistoryServlet">
-                Bill ID : 
-                <select name="billID" onchange="document.forms[0].submit()">
-                    <c:forEach var="orr" items="${orderList}">                
-                        <option value="${orr.orderId}" ${ orr.orderId == billID ? 'selected' : '' } >${orr.orderId}</option>            
-                    </c:forEach>
-                </select>
-            </form>
+            <div class="col-lg-4">
+                <form action="GetOrderHistoryServlet">
+                    Bill ID : 
+                    <select name="billID" onchange="document.forms[0].submit()">
+                        <c:forEach var="orr" items="${orderList}">                
+                            <option value="${orr.orderId}" ${ orr.orderId == billID ? 'selected' : '' } >${orr.orderId}</option>            
+                        </c:forEach>
+                    </select>
+                </form>
+            </div>            
+            <div class="col-lg-4">Order date: <fmt:formatDate value="${orderDetail.orderDate}" pattern="MM/dd/yyyy"/></div>
+
+            <!--Show cancel order button if order not canceled-->
+            <jsp:useBean id="bB" scope="request" class="com.bean.BillBean"/>
+            <c:set var="canceled" value="${bB.isBillCanceled(billID)}"/>
+            <c:if test="${!canceled}">                
+                <form action="CancelOrderServlet?billId=${billID}" method="POST" onsubmit="return confirm('You sure want to cancel the order?')">
+                    <div class="col-lg-4"><button type="submit" class="btn btn-danger">Cancel order</button></div>                    
+                </form>
+            </c:if>
+            <!--Show canceled warning if order canceled-->    
+            <c:if test="${canceled}">                
+                <div class="col-lg-4 alert alert-warning col-lg-8"><strong>Order canceled</strong></div>
+                    </c:if>
         </div>
         <br>
 
         <div class="container">
-            <p>Order date: <fmt:formatDate value="${orderDetail.orderDate}" pattern="MM/dd/yyyy"/></p>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <tr>

@@ -132,10 +132,10 @@ public class BillModel {
         return arr;
     }
 
-    public String getLastBillID(int accountId) throws Exception{
+    public String getLastBillID(int accountId) throws Exception {
         String query = "SELECT MAX(BillID) FROM BillTBL "
                 + "WHERE AccountID = ?";
-        
+
         PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
         ps.setInt(1, accountId);
         ResultSet rs = ps.executeQuery();
@@ -148,6 +148,38 @@ public class BillModel {
         ps.close();
 
         return Integer.toString(lastId);
+    }
+
+    public int getBillAccountId(String billId) throws Exception {
+        String query = "SELECT AccountID FROM BillTBL "
+                + "WHERE BillID = ?";
+
+        PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
+        ps.setString(1, billId);
+        ResultSet rs = ps.executeQuery();
+
+        int accountId = 0;
+        while (rs.next()) {
+            accountId = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+
+        return accountId;
+    }
+
+    public void cancelOrder(String billId) throws Exception {
+
+        String query = "UPDATE BillTBL\n"
+                + "SET State = 'Canceled'\n"
+                + "WHERE BillID = ?";
+
+        PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
+        ps.setString(1, billId);
+        ps.executeUpdate();
+
+        ps.close();
+        
     }
 
 }

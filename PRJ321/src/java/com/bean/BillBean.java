@@ -31,6 +31,7 @@ public class BillBean implements Serializable {
     public void setBillId(String billId) {
         this.billId = billId;
     }
+
     public String getAcountID() {
         return acountID;
     }
@@ -94,4 +95,19 @@ public class BillBean implements Serializable {
         ps.setString(1, billId);
         return ps.execute();
     }
+
+    public boolean isBillCanceled(String billId) throws Exception {
+        String query = "select * from BillTBL where BillID = ?";
+        PreparedStatement ps = new DBContext().getConnection().prepareStatement(query);
+        ps.setString(1, billId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            String state = rs.getString("State");
+            return state.compareTo("Canceled") == 0;
+        }
+
+        return false;
+    }
+
 }
