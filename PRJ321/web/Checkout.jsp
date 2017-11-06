@@ -46,7 +46,7 @@
                     <%--PRODUCTS--%>
                     <jsp:useBean id="pb" scope="request" class="com.bean.ProductsBean"/>
                     <jsp:useBean id="uib" scope="request" class="com.bean.URLImageBean"/>
-                    <jstl:set var="total" value="0"/>
+                    <jstl:set var="finalTotal" value="0"/>
                     <div class="table-responsive">
                         <table id="productTable" class="table table-hover table-bordered">
                             <thead>
@@ -92,7 +92,7 @@
                                             <!--Total-->
                                             <td class="text-right" style="vertical-align: middle">$<span id="total${product.id}" class="totalValue">${product.unitPrice*cartItem.quantity}</span></td>
                                         </tr>
-                                        <jstl:set var="finalTotal" value="${total + (product.unitPrice)*(cartItem.quantity)}"/>
+                                        <jstl:set var="finalTotal" value="${finalTotal + (product.unitPrice)*(cartItem.quantity)}"/>
                                     </jstl:if>
                                 </jstl:forEach>
                                 <tr class="success">
