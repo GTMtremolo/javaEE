@@ -56,9 +56,11 @@
                     <div class="col-lg-10" style="padding-top: 5px;">
                         Status: ${billState}
                     </div>
-                    <form action="CancelOrderServlet?billId=${billID}" method="POST" onsubmit="return confirm('You sure want to cancel the order?')">
-                        <div class="col-lg-2"><button type="submit" class="btn btn-danger pull-right" >Cancel order</button></div>                    
-                    </form>
+                    <c:if test="${billState!='Confirmed'}">
+                        <form action="CancelOrderServlet?billId=${billID}" method="POST" onsubmit="return confirm('You sure want to cancel the order?')">
+                            <div class="col-lg-2"><button type="submit" class="btn btn-danger pull-right" >Cancel order</button></div>                    
+                        </form>
+                    </c:if>
                 </div>
             </c:if>
             <!--Show canceled warning if order canceled-->    
