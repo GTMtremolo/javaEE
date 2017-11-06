@@ -17,7 +17,7 @@
     <body>  
         <%@include file="Header.jsp"%>
         <div class="container">
-            <form action="SpamEmailServlet" method="POST">
+            <form action="../SpamEmailServlet" method="POST">
                 <div class="form-group">
                     <label for="txtHeader">Header: </label>
                     <input type="text" id = "txtHeader"class="form-control" name="txtHeader">

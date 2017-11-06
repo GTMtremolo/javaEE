@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SpamEmailServlet extends HttpServlet {
 
@@ -46,8 +47,10 @@ public class SpamEmailServlet extends HttpServlet {
                 }
             }
 
-            request.setAttribute("spamResults", spamResults);
-            request.getRequestDispatcher("SpamEmailResult.jsp").forward(request, response);
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("spamResults", spamResults);
+            response.sendRedirect("admin/SpamEmailResult.jsp");
         }
     }
 
