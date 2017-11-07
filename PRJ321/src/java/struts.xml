@@ -7,13 +7,13 @@
     <constant name="struts.action.excludePattern" value="/CancelOrderServlet,/GetOrderHistoryServlet,/OrderServlet,/PaymentServlet,/AddToCartServlet,/LoginController,/SendMail,/SpamEmailServlet,/SubEmailServlet,/Test,/UnsubEmailServlet,/SearchServlet,/LoginController,/LogoutController,/ProductController,/ImageController,/CustomerController"/>
     <package name="default" extends="struts-default">
         <action name="upload" class="com.action.uploadFile">
-                <result name="success" type="redirect">/admin/AddProduct.jsp</result>
-                <result name="error" type="redirect">/admin/AddProduct.jsp</result>
+                <result name="success" type="redirect">/admin/ListProduct.jsp</result>
+                <result name="error" type="redirect">/admin/ListProduct.jsp</result>
         </action>
         
         <action name="update" class="com.action.UpdateProduct">
-                <result name="success" type="redirect">/admin/Update.jsp</result>
-                <result name="error" type="redirect">/admin/Update.jsp</result>
+                <result name="success" type="redirect">/admin/ListProduct.jsp</result>
+                <result name="error" type="redirect">/admin/ListProduct.jsp</result>
         </action>
     </package>
 </struts>

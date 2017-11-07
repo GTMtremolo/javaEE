@@ -22,13 +22,7 @@
         <%@include file="Header.jsp"%>
 
         <div class="container well-lg">
-            <c:if test="${sessionScope.message!= null}">
-                <div class="alert alert-danger">
-                    <strong>${sessionScope.message}</strong> 
-                </div>
-            </c:if>
-                
-           
+            
             <form class="form-horizontal"  action="../upload" method="post" enctype = "multipart/form-data" id="myform">
                 <!--NAME AND DETAILS-->
                 <div class="container col-sm-12">

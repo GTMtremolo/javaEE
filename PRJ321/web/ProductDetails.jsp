@@ -6,6 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+   Integer visitCount = new Integer(0);
+   String visitCountKey = new String("visitCount");
+   session.setAttribute(visitCountKey,  visitCount);
+   
+   visitCount = (Integer)session.getAttribute(visitCountKey);
+   visitCount = visitCount + 1;
+   session.setAttribute(visitCountKey,  visitCount);
+   
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -77,6 +88,12 @@
                         <jsp:setProperty name="uib" property="productID" param="keyId"/>
                         <c:set var="imgs" value="${uib.urlImages}"/>
                         <c:set var="maxIndex" value="${imgs.size()-1}"/>
+                        <c:if test="${visitCount>=1}">
+                            <c:if test="${spb.arrID==null}">
+                                <jsp:useBean id="spb" class="com.bean.SeenProductsBean" scope="session" />
+                            </c:if>
+                            ${spb.addToArr(param.keyId)}
+                        </c:if>
 
                         <!--Product images carousel-->
                         <div class="container col-lg-4">
@@ -173,6 +190,7 @@
 
 
         </div>
+        <%@include file="seenProducts.jsp" %>
         <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>

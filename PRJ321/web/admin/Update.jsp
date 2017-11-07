@@ -25,11 +25,7 @@
         <jsp:setProperty name="urlb" property="productID" param="productID"/>
 
         <div class="container well-lg">
-            <c:if test="${sessionScope.message!= null}">
-                <div class="alert alert-danger">
-                    <strong>${sessionScope.message}</strong> 
-                </div>
-            </c:if>
+           
 
 
             <form class="form-horizontal"  action="../update" method="post" enctype = "multipart/form-data" id="myform">
