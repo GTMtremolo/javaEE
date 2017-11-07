@@ -11,6 +11,7 @@ import com.entity.CartItem;
 import com.entity.OrderDetail;
 import com.entity.User;
 import com.model.BillModel;
+import com.model.ProductContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -52,15 +53,25 @@ public class GetOrderHistoryServlet extends HttpServlet {
                 return;
             } */
             int accountId = user.getAcountID();
+            if (request.getParameter("score") != null) {
+                
+                int score = Integer.parseInt(request.getParameter("score"));
+                int productID = Integer.parseInt(request.getParameter("productID"));
+                System.out.println(productID);
+                ProductContext pc = new ProductContext();
+                pc.rateProduct(productID, accountId, score);
+                request.setAttribute("message", "rating success!!!");
+            }
+
             ArrayList<Bill> orderList = new BillModel().getAllOrder(accountId);
             request.setAttribute("orderList", orderList);
 
             String billID = request.getParameter("billID");
-            
-            if(billID == null){
+
+            if (billID == null) {
                 billID = new BillModel().getLastBillID(accountId);
             }
-            
+
             ArrayList<CartItem> cartItems = new BillModel().getAllCartItemByBillID(Integer.parseInt(billID));
             request.setAttribute("orderDetail", new OrderDetail(cartItems));
 

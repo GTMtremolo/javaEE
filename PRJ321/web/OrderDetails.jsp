@@ -11,6 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="icon" href="images/logo.png">
@@ -26,12 +27,18 @@
                 background-position: left top;
                 background-repeat: no-repeat;
             }
+            .checked{color: orange}
         </style>
     </head>
     <body>
         <%@include file="Header.jsp"%>
-
+        <jsp:useBean id="rb" class="com.bean.RateBean"/>
         <div class="container">
+            <c:if test="${!empty message}">
+                <div class="alert alert-danger">
+                    <strong>${message}</strong> 
+                </div>
+            </c:if>
             <h2> My orders </h2>  
             <div class="container">
                 <div class="col-lg-4">
@@ -81,10 +88,12 @@
                         <th>Price</th>
                         <th>Detail</th>
                         <th>Total</th>
+                        <th style="width: 100px">Rating</th>
                         <th>Action</th>
                     </tr>
                     <c:forEach var="cartItem" items="${orderDetail.cartItems}">
                         <tr>
+
                             <th><img src="${cartItem.url}" style="width: 320px;
                                      height: 189px;" class="img-responsive center-block img-rounded"/></th>
                             <th> ${cartItem.productId} </th>
@@ -93,6 +102,34 @@
                             <th> ${cartItem.unitPrice} </th>
                             <th> ${cartItem.productDetail} </th>
                             <th> ${cartItem.sum} </th>
+                            <th>
+
+                                <form  action="GetOrderHistoryServlet" method="get">
+
+                                    <jsp:setProperty name="rb" property="productId" value="${cartItem.productId}"/>
+                                    <input type="hidden" value="${billID}" name="billID"/>
+                                    <input type="hidden" value="${cartItem.productId}" name="productID"/>
+                                   
+                                    <table>
+                                        <tr>
+                                            <th style="width: 20px"><label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label></th>
+                                            <th style="width: 20px"><label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label></th>
+                                            <th style="width: 20px"><label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label></th>
+                                            <th style="width: 20px"><label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label></th>
+                                            <th style="width: 20px"><label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label></th>
+                                        </tr>
+                                        <tr>
+                                            <td> <input type="radio" style="display: true" id="star1" name="score" value="1" onclick="this.form.submit();"/></td>
+                                            <td> <input type="radio" style="display: true" id="star2" name="score" value="2" onclick="this.form.submit();"/></td>
+                                            <td> <input type="radio" style="display: true" id="star3" name="score" value="3" onclick="this.form.submit();"/></td>
+                                            <td> <input type="radio" style="display: true" id="star4" name="score" value="4" onclick="this.form.submit();"/></td>
+                                            <td> <input type="radio" style="display: true" id="star5" name="score" value="5" onclick="this.form.submit();"/></td>
+                                        </tr>
+                                    </table>
+                                   
+                                </form>
+
+                            </th>
                             <th> 
                                 <input class="btn btn-warning" type="button" value="doisp">
                             </th>

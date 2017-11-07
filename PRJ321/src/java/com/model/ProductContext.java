@@ -6,6 +6,7 @@
 package com.model;
 
 import com.entity.Product;
+import com.entity.Rate;
 import com.entity.URLImage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,7 +98,7 @@ public class ProductContext {
                 + "      ,[Details] = ?\n"
                 + "      ,[CategoryID] = ?\n"
                 + " WHERE ProductID = ?";
-        
+
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
         ps.setString(1, p.getName());
         ps.setDouble(2, p.getUnitPrice());
@@ -107,5 +108,50 @@ public class ProductContext {
         ps.setInt(6, p.getId());
         ps.executeUpdate();
         ps.close();
+    }
+
+    public void rateProduct(int productID, int accountID, int score) throws Exception {
+        if (getRateByAccountId(accountID, productID) == null) {
+            String query = "INSERT INTO [dbo].[RattingTBL]\n"
+                    + "           ([ProductID]\n"
+                    + "           ,[AccountID]\n"
+                    + "           ,[Score])\n"
+                    + "     VALUES\n"
+                    + "           (?,?,?)";
+            PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+            ps.setInt(1, productID);
+            ps.setInt(2, accountID);
+            ps.setInt(3, score);
+            ps.execute();
+        } else {
+            String query = "UPDATE [dbo].[RattingTBL]\n"
+                    + "   SET [Score] = ? \n"
+                    + " WHERE  AccountID = ? and ProductID = ?";
+            PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+            ps.setInt(1, score);
+            ps.setInt(2, accountID);
+            ps.setInt(3, productID);
+            ps.execute();
+        }
+
+    }
+
+    public Rate getRateByAccountId(int accountId, int productID) throws Exception {
+        Rate rate = null;
+        String query = "SELECT [ProductID]\n"
+                + "      ,[AccountID]\n"
+                + "      ,[Score]\n"
+                + "      ,[RateID]\n"
+                + "  FROM [ShopGameDB].[dbo].[RattingTBL]\n"
+                + "  where AccountID = " + accountId + " and ProductID = "+ productID;
+        ResultSet rs = new DBContext().getConnection().prepareCall(query).executeQuery();
+        while (rs.next()) {
+            int accId = rs.getInt("AccountID");
+            int Score = rs.getInt("Score");
+            int RateID = rs.getInt("RateID");
+            int ProductID = rs.getInt("ProductID");
+            rate = new Rate(accountId, ProductID, RateID, Score);
+        }
+        return rate;
     }
 }

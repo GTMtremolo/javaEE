@@ -11,12 +11,13 @@
     <head>
         <title>Divine Shop</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/slider.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" href="images/logo.png">
-
+        
 
 
         <style>
@@ -49,6 +50,9 @@
                 background: #FFFFFF;
                 cursor: pointer;
             }
+            .checked{
+                color: orange
+            }
 
         </style>
 
@@ -59,6 +63,7 @@
 
             <jsp:useBean id="pb" class="com.bean.ProductsBean" scope="request"/>
             <jsp:useBean id="urlb" class="com.bean.URLImageBean" scope="request"/>
+            <jsp:useBean id="rb" class="com.bean.RateBean"/>
             <jsp:setProperty name="pb" property="category" param="category"/>
             <jsp:setProperty name="pb" property="name" param="name"/>
             <jsp:setProperty name="pb" property="price" param="price"/>
@@ -71,29 +76,42 @@
 
                     <c:forEach var="p" items="${pb.products}">
                         <jsp:setProperty name="urlb" property="productID" value="${p.id}"/>
+                        <jsp:setProperty name="rb" property="productId" value="${p.id}"/>
                         <div class="col-md-4">
-                            <c:url value="ProductDetails.jsp" var="urlDetail">
-                                <c:param name="keyId" value="${p.id}"/>
-                            </c:url>
-                            <a href="${urlDetail}" style="text-decoration: none">
-                                <c:choose>
-                                    <c:when test="${urlb.urlImages.size()!= 0}">
 
-                                        <img src="${urlb.urlImages.get(0).imageURL}" style="width: 300px;
-                                             height: 200px" class="img-responsive center-block img-rounded"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <h4 style="width: 300px;
-                                             height: 200px ; text-align: center" ><b>Image Not Found</b></h4>
-                                    </c:otherwise>
-                                </c:choose>
+                            <div>
+                                <c:url value="ProductDetails.jsp" var="urlDetail">
+                                    <c:param name="keyId" value="${p.id}"/>
+                                </c:url>
+                                <a href="${urlDetail}" style="text-decoration: none">
+                                    <c:choose>
+                                        <c:when test="${urlb.urlImages.size()!= 0}">
+
+                                            <img src="${urlb.urlImages.get(0).imageURL}" style="width: 300px;
+                                                 height: 200px" class="img-responsive center-block img-rounded"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h4 style="width: 300px;
+                                                height: 200px ; text-align: center" ><b>Image Not Found</b></h4>
+                                        </c:otherwise>
+                                    </c:choose>
 
 
-                                <P></P>
-                                <h4 style="text-align: center; color: red"><b>${p.name}</b></h4>
-                            </a>
+                                    <P></P>
 
-                            <h4 style="text-align: center; color: gray">$:${p.unitPrice}</h5>
+                                    <h4 style="text-align: center; color: red"><b>${p.name}</b></h4>
+                                </a>
+
+                                <h4 style="text-align: center; color: gray">$:${p.unitPrice}</h4>
+                            </div>
+                            <div style="margin-left: 90px">
+                                <label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label>
+                                <label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label>
+                                <label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label>
+                                <label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label>
+                                <label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label>
+                            </div>
+
                         </div>
                     </c:forEach>
 

@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="icon" href="images/logo.png">
@@ -24,6 +25,10 @@
                 background-image: url("images/price-tag.png");
                 background-position: left top;
                 background-repeat: no-repeat;
+            }
+            .checked{
+                color: orange;
+                
             }
         </style>
     </head>
@@ -47,7 +52,9 @@
 
 
 
-        <%@include file="Header.jsp"%>    
+        <%@include file="Header.jsp"%>   
+        <jsp:useBean id="rb" class="com.bean.RateBean"/>
+        <jsp:setProperty name="rb" property="productId" param="keyId"/>
         <div class="container">
             <!--Has no key ID parameter-->
             <c:if test="${param.keyId==null}">
@@ -107,7 +114,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div style="width :100%; height: 300px; text-align: center; color: red"  ><b>Image not found!!</b></div>
-                                    
+
                                 </c:otherwise>
                             </c:choose>
 
@@ -131,9 +138,17 @@
                         <!--Price & add to cart-->
                         <div class="container col-lg-12 center-block" style="padding: 10px;">
                             <!--Price-->
-                            <div class="container col-lg-3">
+                            <div class="container col-lg-1">
                                 <span class="price">$${product.unitPrice}</span>
-                            </div>   
+                            </div>
+                            <!--ratting-->
+                            <div class="col-lg-3" style="text-align: center; font-size: 200%;" >
+                                <label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label>
+                                <label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label>
+                                <label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label>
+                                <label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label>
+                                <label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label>
+                            </div>
                             <!--Button add to Cart-->
                             <form method="POST" action="AddToCartServlet">
                                 <!--Quantity-->
@@ -158,7 +173,7 @@
 
 
         </div>
-            <%@include file="ChatLive.jsp"%>
+        <%@include file="ChatLive.jsp"%>
         <%@include file="Footer.jsp"%>    
     </body>
 </html>
