@@ -24,6 +24,23 @@ public class ProductsBean implements Serializable {
 
     private String name;
     private String price;
+     private int page, pageSize;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public String getName() {
         return name;
@@ -61,6 +78,8 @@ public class ProductsBean implements Serializable {
 
     public ProductsBean() {
         category = 9;
+        pageSize = 6;
+        page= 1;
     }
 
     public int getCategory() {
@@ -74,30 +93,32 @@ public class ProductsBean implements Serializable {
     private ArrayList<String> productImages;
 
     public List<Product> getProducts() throws Exception {
-        if(name == null){
+        if(page == 0) page = 1;
+        if(pageSize == 0) pageSize = 6;
+        int from = (page -1) * pageSize +1;
+        int to = page * pageSize;
+        if (name == null) {
             name = "";
         }
-        if(price == null){
+        if (price == null) {
             price = "" + getMaxPrice();
         }
+        System.out.println(from);
+        System.out.println(to);
         List<Product> products = new ArrayList<Product>();
-        String query = "SELECT [ProductID]\n"
-                + "      ,[ProductName]\n"
-                + "      ,[UnitPrice]\n"
-                + "      ,[Amount]\n"
-                + "      ,[Details]\n"
-                + "      ,[CategoryID]\n"
-                + "  FROM [ShopGameDB].[dbo].[ProductTBL]\n"
-                + "  where CategoryID = " + category
-                 + " and UnitPrice <= (?) "
-                + " and  ProductName like ?";
-        
+        String query = "SELECT *\n"
+                + "  FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY productid) as row \n"
+                + "  FROM [ShopGameDB].[dbo].[ProductTBL] a where a.CategoryID = " + category+") a"
+                + "  where a.CategoryID = " + category
+                + " and a.UnitPrice <= (?) "
+                + " and  a.ProductName like ?"
+                + " and a.row >= "+ from +" and a.row <= "+ to;    
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
         ps.setString(1, price);
         ps.setString(2, '%' + name + '%');
-        
+
         ResultSet rs = ps.executeQuery();
-        
+
         while (rs.next()) {
             String name = rs.getString("productName");
             Double price = rs.getDouble("UnitPrice");
@@ -184,7 +205,7 @@ public class ProductsBean implements Serializable {
         sta.close();
         return maxPrice;
     }
-       
+
     //GET PRODUCT BY KEY ID    
     private int keyId;
 
@@ -195,7 +216,7 @@ public class ProductsBean implements Serializable {
     public void setId(int keyId) {
         this.keyId = keyId;
     }
-    
+
     public Product getProductById() throws Exception {
         String query = "SELECT *  FROM [ShopGameDB].[dbo].[ProductTBL]\n"
                 + "WHERE ProductID = ?";
@@ -215,6 +236,35 @@ public class ProductsBean implements Serializable {
             return new Product(id, amount, category, name, details, unitPrice);
         }
         return null;
+    }
+    
+    
+    public  int getTotalRows() throws Exception{
+         if (name == null) {
+            name = "";
+        }
+        if (price == null) {
+            price = "" + getMaxPrice();
+        }
+        String query = "Select count(*) from productTBL "
+                + "  where CategoryID = " + category
+                + " and UnitPrice <= (?) "
+                + " and  ProductName like ?";
+        
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+         ps.setString(1, price);
+        ps.setString(2, '%' + name + '%');
+        ResultSet rs = ps.executeQuery();
+        int rows = 0;
+        if(rs.next()) rows = rs.getInt(1);
+        rs.close();
+        conn.close();
+        return rows;
+    }
+    public int getTotalPage() throws Exception{
+       
+        return 1 + getTotalRows() / pageSize;
     }
 
 }

@@ -77,7 +77,7 @@
                 <div class="row">
                     <!--Clear all button-->
                     <div class="col-sm-6 text-left">
-                        <a href="#" class="btn btn-block btn-warning">Clear all</a>
+                        <a href="AddProduct.jsp" class="btn btn-block btn-warning">Clear all</a>
                     </div>
                     <!--Add product button-->
                     <div class="col-sm-6 text-right">   

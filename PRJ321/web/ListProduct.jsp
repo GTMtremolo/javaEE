@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="css/slider.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" href="images/logo.png">
-        
+
 
 
         <style>
@@ -67,7 +67,8 @@
             <jsp:setProperty name="pb" property="category" param="category"/>
             <jsp:setProperty name="pb" property="name" param="name"/>
             <jsp:setProperty name="pb" property="price" param="price"/>
-
+            <jsp:setProperty name="pb" property="page" value="${param.page}"/>
+            <jsp:setProperty name="pb" property="pageSize" value="${param.pageSize}"/>
 
             <div class="row">
                 <div class="col-sm-9">
@@ -146,6 +147,17 @@
 
                 </div>
 
+            </div>
+            <div style="text-align: center">
+                <c:forEach var="i" begin="1" end="${pb.totalPage}">
+                    <c:url var="u" value="ListProduct.jsp">
+                        <c:param name = "page" value="${i}"/>
+                        <c:param name="pageSize" value="6"/>
+                        <c:param name="category" value="${param.category}"/>
+                    </c:url>
+                    <a href="${u}"><button class="btn btn-info">${i}</button></a>
+
+                </c:forEach>
             </div>
 
         </div>

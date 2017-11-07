@@ -170,7 +170,7 @@
                             <form method="POST" action="AddToCartServlet">
                                 <!--Quantity-->
                                 <div class="container col-lg-2" style="height: 30px; padding-top: 10px;">      
-                                    <strong style="text-align: center;">Quantity:<input name="quantity" class="form-control input-sm" type="number" min="1" value="1" max="10" style="float: right; clear: both; width: 50%;"></strong>
+                                    <strong style="text-align: center;">Quantity:<input name="quantity" class="form-control input-sm" type="number" min="1" value="1" max="${product.amount}" style="float: right; clear: both; width: 50%;"></strong>
                                 </div>
                                 <div class="container col-lg-2" style="padding: 5px;">                                
                                     <button name="btnAddToCart" class="btn btn-success" type="submit" value="clicked">Add to Cart</button>

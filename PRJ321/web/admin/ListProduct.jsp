@@ -22,6 +22,35 @@
             .checked{
                 color: orange;
             }
+            .slider {
+                -webkit-appearance: none;
+                width: 100%;
+                height: 15px;
+                border-radius: 5px;   
+                background: #d3d3d3;
+                outline: none;
+                opacity: 0.7;
+                -webkit-transition: .2s;
+                transition: opacity .2s;
+            }
+
+            .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%; 
+                background: #AAAAAA;
+                cursor: pointer;
+            }
+
+            .slider::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background: #FFFFFF;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -31,10 +60,15 @@
             <jsp:useBean id="pb" class="com.bean.ProductsBean" scope="request"/>
             <jsp:useBean id="urlb" class="com.bean.URLImageBean" scope="request"/>
             <jsp:useBean id="rb" class="com.bean.RateBean"/>
+            <jsp:setProperty name="pb" property="page" value="${param.page}"/>
+            <jsp:setProperty name="pb" property="pageSize" value="${param.pageSize}"/>
+            <jsp:setProperty name="pb" property="name" param="name"/>
+            <jsp:setProperty name="pb" property="price" param="price"/>
             <c:choose>
                 <c:when test="${param.category!= null}">
 
                     <jsp:setProperty name="pb" property="category" param="category"/>
+                    
                     <c:remove scope="session" var="message"/>
 
                 </c:when>
@@ -61,120 +95,96 @@
 
                             <jsp:setProperty name="urlb" property="productID" value="${p.id}"/>
                             <jsp:setProperty name="rb" property="productId" value="${p.id}"/>
+                            <c:url value="Update.jsp" var="urlUpdate">
+                                <c:param name="productID" value="${p.id}"/>
+                            </c:url>
+                            <a href="${urlUpdate}" style="text-decoration: none">
+                                <c:choose>
 
-                            <c:choose>
 
-
-                                <c:when test="${urlb.urlImages.size()!= 0}">
-                                    <img src="../${urlb.urlImages.get(0).imageURL}" style="width: 300px;
-                                         height: 200px" class="img-responsive center-block img-rounded"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <label  style="width: 300px; height: 200px; text-align: center; color: red" class="img-responsive center-block img-rounded">
-                                        Image not found
-                                    </label>
-                                </c:otherwise>
-                            </c:choose>
-                            <P></P>
-                            <h4 style="text-align: center; color: red"><b>${p.name}</b></h4>
-                            <h4 style="text-align: center; color: gray">$:${p.unitPrice}</h5>
-                                <div class="row" style="margin-left: 90px">
-                                    <label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label>
-                                    <label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label>
-                                    <label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label>
-                                    <label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label>
-                                    <label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-lg-6">
-                                        <form method="post" action="../ProductController" class="col-md-1 col-md-offset-3">
-                                            <input type="hidden" value="${p.id}" name="productID"/> 
-                                            <input type="hidden" value="${param.category}" name="category"/> 
-
-                                            <input type="submit"  class="btn-warning btn" value="Delete" name="btnDelProduct" id="del" style="display: none"/>
-                                            <label for="del"><img src="../images/dele.png" title="delete" width="20px" for="del" /></label>
-                                            
-                                        </form>
+                                    <c:when test="${urlb.urlImages.size()!= 0}">
+                                        <img src="../${urlb.urlImages.get(0).imageURL}" style="width: 300px;
+                                             height: 200px" class="img-responsive center-block img-rounded"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <label  style="width: 300px; height: 200px; text-align: center; color: red" class="img-responsive center-block img-rounded">
+                                            Image not found
+                                        </label>
+                                    </c:otherwise>
+                                </c:choose>
+                                <P></P>
+                                <h4 style="text-align: center; color: red"><b>${p.name}</b></h4>
+                                <h4 style="text-align: center; color: gray">$:${p.unitPrice}</h5>
+                                    <div class="row" style="margin-left: 90px">
+                                        <label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label>
+                                        <label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label>
+                                        <label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label>
+                                        <label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label>
+                                        <label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label>
                                     </div>
-                                    <div class="col-lg-6">                                   
-                                        <c:url value="Update.jsp" var="urlUpdate">
-                                            <c:param name="productID" value="${p.id}"/>
-                                        </c:url>
-                                        <a href=${urlUpdate}><img src="../images/update.png" title="update" width="20px"/></a>  
-                                    </div>
-
-
-                                </div>
-
-
-
+                            </a>
                         </div>
 
 
                     </c:forEach>
                 </div>
-                <c:forEach var="p" items="${pb.products}">
+                <div class="col-lg-3">
+                    <form action="ListProduct.jsp" class="form-horizontal form-group" method="get">
+                        <input type="hidden" name ="category" value="${param.category}"/>
+                        <div class="row"> 
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="txtName" name="name" placeholder="Enter product's name" value="${param.name}">
+                            </div>
 
-                    <div class="col-md-4">
-                        <br/>
+                            <div class="col-sm-2">
+                                <input type="submit" value="Search" class="btn btn-primary" name="btnSearch" />
+                            </div>
+                        </div>
 
-                        <jsp:setProperty name="urlb" property="productID" value="${p.id}"/>
-                        <jsp:setProperty name="rb" property="productId" value="${p.id}"/>
-
-                        <c:choose>
-
-
-                            <c:when test="${urlb.urlImages.size()!= 0}">
-                                <img src="../${urlb.urlImages.get(0).imageURL}" style="width: 300px;
-                                     height: 200px" class="img-responsive center-block img-rounded"/>
-                            </c:when>
-                            <c:otherwise>
-                                <label  style="width: 300px; height: 200px; text-align: center; color: red" class="img-responsive center-block img-rounded">
-                                    Image not found
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <label for="maxPrice"> Maximum Price : 
                                 </label>
-                            </c:otherwise>
-                        </c:choose>
-                        <P></P>
-                        <h4 style="text-align: center; color: red"><b>${p.name}</b></h4>
-                        <h4 style="text-align: center; color: gray">$:${p.unitPrice}</h5>
-                            <div class="row" style="margin-left: 140px">
-                                <label for="star1" class="fa fa-star ${rb.rateScore>=1?"checked":""}"></label>
-                                <label for="star2" class="fa fa-star ${rb.rateScore>=2?"checked":""}"></label>
-                                <label for="star3" class="fa fa-star ${rb.rateScore>=3?"checked":""}"></label>
-                                <label for="star4" class="fa fa-star ${rb.rateScore>=4?"checked":""}"></label>
-                                <label for="star5" class="fa fa-star ${rb.rateScore>=5?"checked":""}"></label>
-                            </div>
-                            <div class="row">
-
-
-                                <form method="post" action="../ProductController" class="col-md-1 col-md-offset-3">
-                                    <input type="hidden" value="${p.id}" name="productID"/> 
-                                    <input type="hidden" value="${param.category}" name="category"/> 
-
-                                    <input type="submit" class="btn-warning btn" value="Delete" name="btnDelProduct"/>
-                                </form>
-                                <c:url value="Update.jsp" var="urlUpdate">
-                                    <c:param name="productID" value="${p.id}"/>
-                                </c:url>
-                                <a href=${urlUpdate}><button class="btn-success btn col-md-2 col-md-offset-2">Update</button></a>  
+                                <label id="txtValue" > ${param.price} </label>
+                                <label> $ </label>
                             </div>
 
+                            <div class="col-sm-10">
+                                <input type="range" min="1" max="${pb.maxPrice}" value="${param.price}" class="slider" name="price" id="myRange">
+                            </div>
+                        </div>
 
-
-                    </div>
-
+                    </form>
+                </div>
+            </div>
+            <div style="text-align: center">
+                <c:forEach var="i" begin="1" end="${pb.totalPage}">
+                    <c:url var="u" value="ListProduct.jsp">
+                        <c:param name = "page" value="${i}"/>
+                        <c:param name="pageSize" value="6"/>
+                        <c:param name="category" value="${param.category}"/>
+                    </c:url>
+                    <a href="${u}"><button class="btn btn-info">${i}</button></a>
 
                 </c:forEach>
             </div>
-        </table
-    </div>
-    <%@include file="Footer.jsp"%>    
+
+        </div>
+        <%@include file="Footer.jsp"%>    
 
 
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery-3.2.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
 
+        <script>
 
-</body>
+            $(document).ready(function () {
+
+                $("#myRange").change(function () {
+                    var result = $("#myRange").val();
+                    $("#txtValue").text(result);
+                });
+            });
+        </script>
+    </body>
 </html>
