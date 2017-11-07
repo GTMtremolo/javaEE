@@ -6,6 +6,8 @@
 package com.bean;
 
 import com.entity.Bill;
+import com.entity.CartItem;
+import com.model.BillModel;
 import com.model.DBContext;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -93,7 +95,32 @@ public class BillBean implements Serializable {
                 + " WHERE BillID = ?";
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
         ps.setString(1, billId);
+
+        decreaseQuantity();
+
         return ps.execute();
+    }
+
+    //Update product quantity    
+    public void decreaseQuantity() throws Exception {
+        ArrayList<CartItem> cartItems
+                = new BillModel().getAllCartItemByBillID(Integer.parseInt(billId));
+
+        for (CartItem cartItem : cartItems) {
+            int productId = cartItem.getProductId();
+            int quantity = cartItem.getQuantity();
+
+            String query = "UPDATE ProductTBL "
+                    + "SET Amount = Amount - ? "
+                    + "WHERE ProductID = ?";
+
+            PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
+            ps.setInt(1, quantity);
+            ps.setInt(2, productId);
+
+            ps.execute();
+        }
+
     }
 
     public String getBillState(String billId) throws Exception {
