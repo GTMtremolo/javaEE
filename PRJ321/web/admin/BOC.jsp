@@ -21,21 +21,23 @@
     <body>
         <jsp:useBean id="bb" class="com.bean.BillBean"/>
         <jsp:setProperty name="bb" param="acountID" property="acountID"/>
+        <jsp:setProperty name="bb" property="page" value="${param.page}"/>
+        <jsp:setProperty name="bb" property="pageSize" value="${param.pageSize}"/>
         <%@include file="Header.jsp" %>
         <div class="container">
             <table class="table table-bordered table-hover table-responsive bg-success">    
                 <tr>
                     <th colspan="7" class="text-info text-center h3">List Bill of customer ${param.name}</th>
-                   
+
                 </tr>
                 <tr> <th colspan="7" class="text-info ">
                         Phone: <i>${param.phone}</i><br/>
                         Address: <i>${param.userAdress}</i>
                         <br/>
                         Email: <i>${param.userEmail}</i>
-                        
+
                     </th></tr>
-                
+
                 <tr>
 
                     <th>Bill ID</th>
@@ -64,6 +66,24 @@
 
                 </c:forEach>
             </table>
+
+            <div style="text-align: center">
+                <c:forEach var="i" begin="1" end="${bb.totalPage}">
+                    <c:url var="u" value="BOC.jsp">
+                        <c:param name = "page" value="${i}"/>
+                        <c:param name="pageSize" value="5"/>
+                        <c:param name="acountID" value="${param.acountID}"/>
+                        <c:param value="${param.name}" name="name"/>
+                        <c:param value="${param.phone}" name="phone"/>
+                        <c:param value="${param.userAdress}" name="userAdress"/>
+                        <c:param value="${param.userEmail}" name="userEmail"/>
+
+
+                    </c:url>
+                    <a href="${u}"><button class="btn btn-info">${i}</button></a>
+
+                </c:forEach>
+            </div>
         </div>
 
         <%@include file="Footer.jsp" %>

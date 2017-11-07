@@ -10,6 +10,7 @@ import com.entity.CartItem;
 import com.model.BillModel;
 import com.model.DBContext;
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -23,6 +24,28 @@ import java.util.List;
  */
 public class BillBean implements Serializable {
 
+    private int page, pageSize;
+
+    public BillBean() {
+        this.page = 1;
+        this.pageSize = 5;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
     private String acountID;
     private String billId;
 
@@ -43,8 +66,18 @@ public class BillBean implements Serializable {
     }
 
     public List<Bill> getBillByCustomerID() throws Exception {
+        if (page == 0) {
+            page = 1;
+        }
+        if (pageSize == 0) {
+            pageSize = 5;
+        }
+        int from = (page - 1) * pageSize + 1;
+        int to = page * pageSize;
         List<Bill> bills = new ArrayList<>();
-        String query = "select * from BillTBL where AccountID =" + acountID + " order by BillID desc";
+        String query = "select * from (select *, ROW_NUMBER() OVER (ORDER BY billid desc ) as row from BillTBL a where accountID = "+acountID+"  ) a where a.AccountID =" + acountID
+                + " and a.row >= " + from + " and a.row <= " + to
+                + " order by BillID desc";
         ResultSet rs = new DBContext().getConnection().prepareCall(query).executeQuery();
         while (rs.next()) {
             int id = rs.getInt("BillID");
@@ -151,5 +184,27 @@ public class BillBean implements Serializable {
         }
 
         return null;
+    }
+
+    public int getTotalRows() throws Exception {
+
+        String query = "Select count(*) from BillTBL  where accountID = " + acountID;
+
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+
+        ResultSet rs = ps.executeQuery();
+        int rows = 0;
+        if (rs.next()) {
+            rows = rs.getInt(1);
+        }
+        rs.close();
+        conn.close();
+        return rows;
+    }
+
+    public int getTotalPage() throws Exception {
+
+        return 1 + getTotalRows() / pageSize;
     }
 }

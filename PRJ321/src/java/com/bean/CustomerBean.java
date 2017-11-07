@@ -22,10 +22,32 @@ import java.util.List;
  */
 public class CustomerBean implements Serializable {
 
+    private int page, pageSize;
+
+    public CustomerBean() {
+        this.page = 1;
+        this.pageSize = 5;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
     int accountID;
     String password;
-    
-     String pwd;
+
+    String pwd;
     String name;
     String phone;
     String adderss;
@@ -113,8 +135,14 @@ public class CustomerBean implements Serializable {
         conn.close();
         return r;
     }
-    
+
     public List<User> getAllCustomers() throws Exception {
+        if(page == 0) page = 1;
+        if(pageSize == 0) pageSize = 5;
+        int from = (page -1) * pageSize +1;
+        int to = page * pageSize;
+        System.out.println(from);
+        System.out.println(to);
         List<User> r = new ArrayList<>();
         String query = "SELECT [AccountID]\n"
                 + "      ,[Name]\n"
@@ -122,8 +150,10 @@ public class CustomerBean implements Serializable {
                 + "      ,[Email]\n"
                 + "      ,[PhoneNumber]\n"
                 + "      ,[password]\n"
-                + "  FROM [ShopGameDB].[dbo].[UserTBL]\n"
-                + "where AccountID != 1";
+                + "  FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY accountId) as row  \n"
+                + "  FROM [ShopGameDB].[dbo].[UserTBL] a where accountId != 1) a\n"
+                + "where a.AccountID != 1"
+                + " and a.row >= "+ from +" and a.row <= "+ to; 
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -140,28 +170,50 @@ public class CustomerBean implements Serializable {
         conn.close();
         return r;
     }
-    
+
     public boolean getChangePassword() throws Exception {
 
         String query = "UPDATE [ShopGameDB].[dbo].[UserTBL]\n"
-                + "   SET [password] = "+pwd
+                + "   SET [password] = " + pwd
                 + " WHERE AccountID = " + accountID;
 
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
         return ps.execute();
     }
-     public boolean getChangeInfo() throws Exception {
+
+    public boolean getChangeInfo() throws Exception {
 
         String query = "UPDATE [ShopGameDB].[dbo].[UserTBL]\n"
-                + "   SET [Name] = '"+ name
-                + "      ',[Address] = '"+adderss
-                + "      ',[Email] = '"+email
-                + "      ',[PhoneNumber] = "+phone
+                + "   SET [Name] = '" + name
+                + "      ',[Address] = '" + adderss
+                + "      ',[Email] = '" + email
+                + "      ',[PhoneNumber] = " + phone
                 + " WHERE AccountID = " + accountID;
 
         PreparedStatement ps = new DBContext().getConnection().prepareCall(query);
 
         return ps.execute();
+    }
+    
+    
+    public  int getTotalRows() throws Exception{
+        
+        String query = "Select count(*) from userTBL  where accountID != 1";
+                
+        
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        
+        ResultSet rs = ps.executeQuery();
+        int rows = 0;
+        if(rs.next()) rows = rs.getInt(1);
+        rs.close();
+        conn.close();
+        return rows;
+    }
+    public int getTotalPage() throws Exception{
+      
+        return 1 + getTotalRows() / pageSize;
     }
 }

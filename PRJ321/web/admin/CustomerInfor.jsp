@@ -19,9 +19,11 @@
     </head>
     <body>
         <jsp:useBean id="cb" class="com.bean.CustomerBean"/>
+        <jsp:setProperty name="cb" property="page" value="${param.page}"/>
+        <jsp:setProperty name="cb" property="pageSize" value="${param.pageSize}"/>
         <%@include file="Header.jsp" %>
         <div class="container">
-            
+
             <table class="table table-bordered table-hover table-responsive bg-success">
                 <tr>
                     <td colspan="6" class="text-center h3 text-danger" >Information of all customer</td>
@@ -56,8 +58,19 @@
                 </c:forEach>
             </table>
             
-            
+            <div style="text-align: center">
+                <c:forEach var="i" begin="1" end="${cb.totalPage}">
+                    <c:url var="u" value="CustomerInfor.jsp">
+                        <c:param name = "page" value="${i}"/>
+                        <c:param name="pageSize" value="2"/>
+                    
+                    </c:url>
+                    <a href="${u}"><button class="btn btn-info">${i}</button></a>
+
+                </c:forEach>
+            </div>
+
         </div>
-            <%@include file="Footer.jsp" %>
+        <%@include file="Footer.jsp" %>
     </body>
 </html>
